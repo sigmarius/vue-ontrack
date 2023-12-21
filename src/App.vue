@@ -1,58 +1,15 @@
 <script setup>
-  import { CheckCircleIcon } from '@heroicons/vue/24/solid';
-  import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
-
-  const navItems = {
-    timeline: ClockIcon,
-    activities: ListBulletIcon,
-    progress: ChartBarIcon
-  };
+  import TheHeader from './components/TheHeader.vue';
+  import TheNav from '@/components/TheNav.vue'
 </script>
 
 <template>
-  <header class="sticky top-0 z-20  p-3 flex items-center justify-between border-b bg-white">
-    <a href="#">
-      <img src="./assets/logo.png" alt="Logo" class="h-9" />
-    </a>
-
-    <a href="#" class="text-sm">
-      <div v-if="true" class="flex items-center gap-1">
-        Day complete!
-
-        <CheckCircleIcon class="h-7 text-green-500" />
-      </div>
-
-      <div v-else class="flex items-center gap-1">
-        <div>Progress: <span class="font-mono">20%</span></div>
-
-        <div class="h-3 w-3 rounded-full bg-red-500"></div>
-      </div>
-    </a>
-  </header>
-
+  <TheHeader />
   <main class="flex flex-col flex-grow">
 
   </main>
 
-  <nav class="sticky bottom-0 z-10 bg-white">
-    <ul class="flex justify-around items-center border-t">
-      <li
-        class="flex-1"
-        v-for="icon, page in navItems"
-        :key="page"
-        >
-        <a
-          class="p-2 flex flex-col items-center text-xs capitalize"
-          :href="`#${page}`"
-          >
-
-          <component :is="icon" class="h-6 w-6" />
-          {{ page }}
-
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <TheNav />
 </template>
 
 <style scoped></style>
