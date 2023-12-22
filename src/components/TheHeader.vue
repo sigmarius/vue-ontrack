@@ -1,5 +1,4 @@
 <script setup>
-    import { CheckCircleIcon } from '@heroicons/vue/24/solid';
     import TheLogo from '@/components/TheLogo.vue';
     import TheHeaderProgress from '@/components/TheHeaderProgress.vue';
 </script>
