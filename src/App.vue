@@ -6,7 +6,7 @@ import TheActivities from "@/pages/TheActivities.vue";
 import TheProgress from "@/pages/TheProgress.vue";
 
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from "@/constants";
-import { normalizePageHash } from "@/functions";
+import { normalizePageHash, generateTimelineItems } from "@/functions";
 
 import { ref } from "vue";
 
@@ -16,6 +16,8 @@ function goToPage(page) {
   // обновление значения реактивной переменной происходит через value
   currentPage.value = page;
 }
+
+const timelineItems = generateTimelineItems();
 </script>
 
 <template>
@@ -26,7 +28,10 @@ function goToPage(page) {
   />
 
   <main class="flex flex-col flex-grow">
-    <TheTimeline v-show="currentPage === PAGE_TIMELINE" />
+    <TheTimeline
+      v-show="currentPage === PAGE_TIMELINE"
+      :timeline-items="timelineItems"
+    />
 
     <TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
 
