@@ -13,3 +13,5 @@ export const NAV_ITEMS = {
   [PAGE_ACTIVITIES]: ListBulletIcon,
   [PAGE_PROGRESS]: ChartBarIcon,
 };
+
+export const HOURS_IN_DAY = 24;
