@@ -23,8 +23,7 @@ const timelineItems = generateTimelineItems();
 <template>
   <!-- @go-to-timeline в html атрибуты пишутся в кебаб-кейс -->
   <TheHeader
-    @go-to-timeline="goToPage(PAGE_TIMELINE)"
-    @go-to-progress="goToPage(PAGE_PROGRESS)"
+    @navigate="goToPage($event)"
   />
 
   <main class="flex flex-col flex-grow">

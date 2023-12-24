@@ -1,4 +1,4 @@
-import { NAV_ITEMS, HOURS_IN_DAY } from "@/constants";
+import { NAV_ITEMS, HOURS_IN_DAY, MIDNIGHT_HOUR } from "@/constants";
 
 export function isPageValid (currentPage) {
     return Object.keys(NAV_ITEMS).includes(currentPage);
@@ -6,5 +6,5 @@ export function isPageValid (currentPage) {
 
 export function isTimelineItemValid({ hour }) {
     return typeof hour === "number"
-        && hour >= 0 && hour < HOURS_IN_DAY;
+        && hour >= MIDNIGHT_HOUR && hour < HOURS_IN_DAY;
 }

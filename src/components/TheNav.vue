@@ -18,8 +18,10 @@ defineProps({
 
 // пропсы напрямую в дочернем компоненте менять нельзя!!!
 // сообщаем родителю об изменении пропса
-// определяем событие navigate
-const emit = defineEmits(["navigate"]);
+// определяем событие navigate с функцией-валидатором
+const emit = defineEmits({
+  navigate: isPageValid,
+});
 </script>
 
 <template>
