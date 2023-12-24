@@ -41,7 +41,10 @@ const timelineItems = generateTimelineItems();
   <!-- :current-page передаем пропс в дочерний компонент в кебаб-кейс -->
   <!-- @navigate слушаем событие, переданное из дочернего компонента -->
   <!-- $event данные, переданные вторым аргументом из дочернего компонента -->
-  <TheNav :current-page="currentPage" @navigate="goToPage($event)" />
+  <TheNav
+    :current-page="currentPage"
+    @navigate="goToPage($event)"
+  />
 </template>
 
 <style scoped></style>
