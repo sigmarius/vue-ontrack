@@ -6,7 +6,12 @@ import { NAV_ITEMS } from "@/constants";
 // обозначаем пропсы, полученные от родителя
 // в html передаются в кебаб-кейс
 // в js обозначаются в кемел-кейс
-defineProps(["currentPage"]);
+defineProps({
+  currentPage: {
+    type: String,
+    required: true,
+  },
+});
 
 // пропсы напрямую в дочернем компоненте менять нельзя!!!
 // сообщаем родителю об изменении пропса
