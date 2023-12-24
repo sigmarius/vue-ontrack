@@ -17,15 +17,24 @@ defineProps({
     validator: validateSelectOptions,
   },
 });
+
+const emit = defineEmits({
+  select(value) {
+    return typeof value === "number";
+  },
+});
 </script>
 
 <template>
   <div class="flex gap-2">
-    <BaseButton>
+    <BaseButton @click="emit('select', null)">
       <XMarkIcon class="h-8" />
     </BaseButton>
 
-    <select class="py-1 px-2 w-full text-2xl truncate rounded bg-gray-100">
+    <select
+      class="py-1 px-2 w-full text-2xl truncate rounded bg-gray-100"
+      @change="emit('select', Number($event.target.value))"
+    >
       <option selected disabled value="">{{ placeholder }}</option>
       <option
         v-for="{ value, label } in options"
