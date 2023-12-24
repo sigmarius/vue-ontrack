@@ -18,13 +18,13 @@ function goToPage(page) {
 }
 
 const timelineItems = generateTimelineItems();
+
+const activities = ["Coding", "Reading", "Training"];
 </script>
 
 <template>
   <!-- @go-to-timeline в html атрибуты пишутся в кебаб-кейс -->
-  <TheHeader
-    @navigate="goToPage($event)"
-  />
+  <TheHeader @navigate="goToPage($event)" />
 
   <main class="flex flex-col flex-grow">
     <TheTimeline
@@ -32,7 +32,10 @@ const timelineItems = generateTimelineItems();
       :timeline-items="timelineItems"
     />
 
-    <TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
+    <TheActivities
+      v-show="currentPage === PAGE_ACTIVITIES"
+      :activities="activities"
+    />
 
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
@@ -40,10 +43,7 @@ const timelineItems = generateTimelineItems();
   <!-- :current-page передаем пропс в дочерний компонент в кебаб-кейс -->
   <!-- @navigate слушаем событие, переданное из дочернего компонента -->
   <!-- $event данные, переданные вторым аргументом из дочернего компонента -->
-  <TheNav
-    :current-page="currentPage"
-    @navigate="goToPage($event)"
-  />
+  <TheNav :current-page="currentPage" @navigate="goToPage($event)" />
 </template>
 
 <style scoped></style>
