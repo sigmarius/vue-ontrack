@@ -1,7 +1,9 @@
 <script setup>
-import NavItem from "./NavItem.vue";
+import NavItem from "@/components/NavItem.vue";
 
 import { NAV_ITEMS } from "@/constants";
+
+import { isPageValid } from "@/validators";
 
 // обозначаем пропсы, полученные от родителя
 // в html передаются в кебаб-кейс
@@ -10,9 +12,7 @@ defineProps({
   currentPage: {
     type: String,
     required: true,
-    validator(currentPage) {
-      return Object.keys(NAV_ITEMS).includes(currentPage);
-    },
+    validator: isPageValid,
   },
 });
 
