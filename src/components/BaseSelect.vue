@@ -1,11 +1,13 @@
 <script setup>
+import { computed } from "vue";
+
 import { XMarkIcon } from "@heroicons/vue/24/solid";
 import BaseButton from "@/components/BaseButton.vue";
-import { validateSelectOptions } from "@/validators";
+import { validateSelectOptions, isUndefinedOrNull, isNumberOrNull } from "@/validators";
 
 // defineProps(["options", "placeholder", "selected"]);
 
-defineProps({
+const props = defineProps({
   selected: Number,
   placeholder: {
     type: String,
@@ -19,10 +21,12 @@ defineProps({
 });
 
 const emit = defineEmits({
-  select(value) {
-    return typeof value === "number";
-  },
+  select: isNumberOrNull,
 });
+
+// computed свойства определяются на основе значений других свойств
+// являются реактивными, и запускаются при изменении реактивных свойств
+const isNotSelected = computed(() => isUndefinedOrNull(props.selected));
 </script>
 
 <template>
@@ -35,7 +39,9 @@ const emit = defineEmits({
       class="py-1 px-2 w-full text-2xl truncate rounded bg-gray-100"
       @change="emit('select', Number($event.target.value))"
     >
-      <option selected disabled value="">{{ placeholder }}</option>
+      <option :selected="isNotSelected" disabled value="">
+        {{ placeholder }}
+      </option>
       <option
         v-for="{ value, label } in options"
         :value="value"
