@@ -31,6 +31,10 @@ const activitySelectOptions = generateActivitySelectOptions(activities.value);
 function deleteActivity(activity) {
   activities.value.splice(activities.value.indexOf(activity), 1);
 }
+
+function createActivity(activity) {
+  activities.value = [activity, ...activities.value];
+}
 </script>
 
 <template>
@@ -49,6 +53,7 @@ function deleteActivity(activity) {
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
       @delete-activity="deleteActivity"
+      @create-activity="createActivity"
     />
 
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />

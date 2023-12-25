@@ -17,7 +17,10 @@ defineProps({
 
 const emit = defineEmits({
   deleteActivity: isActivityValid,
+  createActivity: isActivityValid,
 });
+
+let newActivity = "";
 </script>
 
 <template>
@@ -31,11 +34,16 @@ const emit = defineEmits({
       />
     </ul>
 
-    <form class="sticky bottom-[57px] p-4 flex gap-2 border-t bg-white">
+    <form
+      class="sticky bottom-[57px] p-4 flex gap-2 border-t bg-white"
+      @submit.prevent="emit('createActivity', newActivity)"
+    >
       <input
         type="text"
         class="w-full px-4 rounded border text-xl"
         placeholder="Activity name"
+        :value="newActivity"
+        @input="newActivity = $event.target.value"
       />
 
       <BaseButton>
