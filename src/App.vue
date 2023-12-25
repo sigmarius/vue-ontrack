@@ -6,7 +6,11 @@ import TheActivities from "@/pages/TheActivities.vue";
 import TheProgress from "@/pages/TheProgress.vue";
 
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from "@/constants";
-import { normalizePageHash, generateTimelineItems, generateActivitySelectOptions } from "@/functions";
+import {
+  normalizePageHash,
+  generateTimelineItems,
+  generateActivitySelectOptions,
+} from "@/functions";
 
 import { ref } from "vue";
 
@@ -19,9 +23,14 @@ function goToPage(page) {
 
 const timelineItems = generateTimelineItems();
 
-const activities = ["Coding", "Reading", "Training"];
+const activities = ref(["Coding", "Reading", "Training"]);
 
-const activitySelectOptions = generateActivitySelectOptions(activities);
+// обращение к реактивным переменным всегда через свойство value
+const activitySelectOptions = generateActivitySelectOptions(activities.value);
+
+function deleteActivity(activity) {
+  activities.value.splice(activities.value.indexOf(activity), 1);
+}
 </script>
 
 <template>
@@ -35,9 +44,11 @@ const activitySelectOptions = generateActivitySelectOptions(activities);
       :activity-select-options="activitySelectOptions"
     />
 
+    <!-- в шаблоне ссылаться на свойство value для реактивных элементов не обязательно, vue сделает это автоматически -->
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
+      @delete-activity="deleteActivity"
     />
 
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />

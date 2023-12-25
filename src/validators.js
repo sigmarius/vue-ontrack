@@ -4,10 +4,6 @@ function isNull(value) {
     return value === null;
 }
 
-function isUndefined(value) {
-    return value === undefined;
-}
-
 function isNumber(value) {
     return typeof value === 'number';
 }
@@ -26,6 +22,10 @@ function isSelectOptionValid({ value, label}) {
 
 function isNotEmptyString(value) {
     return isString(value) && value.length > 0
+}
+
+export function isUndefined(value) {
+    return value === undefined;
 }
 
 export function isHourValid(hour) {
