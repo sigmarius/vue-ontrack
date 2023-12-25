@@ -3,6 +3,9 @@ import { validateActivities, isActivityValid } from "@/validators";
 
 import ActivityItem from "@/components/ActivityItem.vue";
 
+import BaseButton from "@/components/BaseButton.vue";
+import { PlusIcon } from "@heroicons/vue/24/outline";
+
 defineProps({
   activities: {
     type: Array,
@@ -27,5 +30,17 @@ const emit = defineEmits({
         @delete="emit('deleteActivity', activity)"
       />
     </ul>
+
+    <form class="sticky bottom-[57px] p-4 flex gap-2 border-t bg-white">
+      <input
+        type="text"
+        class="w-full px-4 rounded border text-xl"
+        placeholder="Activity name"
+      />
+
+      <BaseButton>
+        <PlusIcon class="h-8" />
+      </BaseButton>
+    </form>
   </div>
 </template>
