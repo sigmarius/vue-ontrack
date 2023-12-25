@@ -1,4 +1,4 @@
-import { NAV_ITEMS, HOURS_IN_DAY, MIDNIGHT_HOUR } from "@/constants";
+import { NAV_ITEMS, HOURS_IN_DAY, MIDNIGHT_HOUR, BUTTON_TYPES } from "@/constants";
 
 function isNull(value) {
     return value === null;
@@ -64,4 +64,8 @@ export function isActivityValid(activity) {
 
 export function validateActivities(activities) {
     return activities.every(isActivityValid);
+}
+
+export function isButtonTypeValid(type) {
+    return BUTTON_TYPES.includes(type);
 }

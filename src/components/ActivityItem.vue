@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from "vue";
-import { TrashIcon } from "@heroicons/vue/24/solid";
+import { TrashIcon } from "@heroicons/vue/24/outline";
 
 import BaseButton from "@/components/BaseButton.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 
 import { isActivityValid } from "@/validators";
 
-import { PERIOD_SELECT_OPTIONS } from "@/constants";
+import { PERIOD_SELECT_OPTIONS, BUTTON_TYPE_DANGER } from "@/constants";
 
 defineProps({
   activity: {
@@ -24,7 +24,7 @@ const secondsToComplete = ref(null);
 <template>
   <li class="p-4 flex flex-col gap-2">
     <div class="flex items-center gap-2">
-      <BaseButton>
+      <BaseButton :type="BUTTON_TYPE_DANGER">
         <TrashIcon class="h-8" />
       </BaseButton>
       <span class="text-xl truncate">{{ activity }}</span>
