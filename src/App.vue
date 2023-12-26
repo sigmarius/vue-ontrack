@@ -10,6 +10,8 @@ import {
   normalizePageHash,
   generateTimelineItems,
   generateActivitySelectOptions,
+  generateActivities,
+  id,
 } from "@/functions";
 
 import { ref } from "vue";
@@ -23,7 +25,7 @@ function goToPage(page) {
 
 const timelineItems = generateTimelineItems();
 
-const activities = ref(["Coding", "Reading", "Training"]);
+const activities = ref(generateActivities());
 
 // обращение к реактивным переменным всегда через свойство value
 const activitySelectOptions = generateActivitySelectOptions(activities.value);
@@ -32,8 +34,12 @@ function deleteActivity(activity) {
   activities.value.splice(activities.value.indexOf(activity), 1);
 }
 
-function createActivity(activity) {
-  activities.value = [...activities.value, activity];
+function createActivity(name) {
+  activities.value.push({
+    id: id(),
+    name,
+    secondsToComplete: 0,
+  });
 }
 </script>
 
