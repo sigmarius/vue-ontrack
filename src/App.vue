@@ -33,7 +33,7 @@ function deleteActivity(activity) {
 }
 
 function createActivity(activity) {
-  activities.value = [activity, ...activities.value];
+  activities.value = [...activities.value, activity];
 }
 </script>
 

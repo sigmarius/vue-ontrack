@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 
 import BaseButton from "@/components/BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
@@ -12,7 +12,19 @@ function submit() {
   emit("submit", activity.value);
 
   activity.value = "";
+
+  // выполняется после обновления DOM-дерева на основе новых значений реактивных переменных
+  nextTick(() => {
+    // прокрутка страницы вниз после добавления новой активности
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+
+  // вариант через промис
+  nextTick().then(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  });
 }
+
 
 const emit = defineEmits({
   submit: isActivityValid,
