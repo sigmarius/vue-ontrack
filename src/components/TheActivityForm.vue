@@ -8,23 +8,17 @@ import { isActivityValid } from "@/validators";
 // для реактивной переменной модицицируется поле value
 const activity = ref("");
 
-function submit() {
+// вариант через async
+async function submit() {
   emit("submit", activity.value);
 
   activity.value = "";
 
-  // выполняется после обновления DOM-дерева на основе новых значений реактивных переменных
-  nextTick(() => {
-    // прокрутка страницы вниз после добавления новой активности
-    window.scrollTo(0, document.body.scrollHeight);
-  });
+  await nextTick();
 
-  // вариант через промис
-  nextTick().then(() => {
-    window.scrollTo(0, document.body.scrollHeight);
-  });
+  // выполняется после разрешения промиса
+  window.scrollTo(0, document.body.scrollHeight);
 }
-
 
 const emit = defineEmits({
   submit: isActivityValid,
