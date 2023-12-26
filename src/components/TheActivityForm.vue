@@ -4,15 +4,20 @@ import { nextTick, ref } from "vue";
 import BaseButton from "@/components/BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
 import { isActivityValid } from "@/validators";
+import { id } from "@/functions";
 
 // для реактивной переменной модицицируется поле value
-const activity = ref("");
+const name = ref("");
 
 // вариант через async
 async function submit() {
-  emit("submit", activity.value);
+  emit("submit", {
+    id: id(),
+    name: name.value,
+    secondsToComplete: 0,
+  });
 
-  activity.value = "";
+  name.value = "";
 
   await nextTick();
 
@@ -31,15 +36,15 @@ const emit = defineEmits({
     @submit.prevent="submit"
   >
     <!-- v-model: сокращенная нотация для :value и @input -->
-    <!--  <input :value="activity" @input="activity = $event.target.value" -->
+    <!--  <input :value="name" @input="name = $event.target.value" -->
     <input
       type="text"
       class="w-full px-4 rounded border text-xl"
       placeholder="Activity name"
-      v-model="activity"
+      v-model="name"
     />
 
-    <BaseButton :disabled="activity.trim() === ''">
+    <BaseButton :disabled="name.trim() === ''">
       <PlusIcon class="h-8" />
     </BaseButton>
   </form>

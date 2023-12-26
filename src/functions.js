@@ -43,21 +43,10 @@ export function id() {
 }
 
 export function generateActivities() {
-  return [
-    {
+  return ['Coding', 'Training', 'Reading']
+  .map((name, idx) => ({
       id: id(),
-      name: 'Coding',
-      secondsToComplete: 0 * SECONDS_IN_HOUR
-    },
-    {
-      id: id(),
-      name: 'Training',
-      secondsToComplete: 1 * SECONDS_IN_HOUR
-    },
-    {
-      id: id(),
-      name: 'Reading',
-      secondsToComplete: 2 * SECONDS_IN_HOUR
-    }
-  ]
+      name,
+      secondsToComplete: idx * SECONDS_IN_HOUR
+  }))
 }
