@@ -13,7 +13,7 @@ import {
   generateActivities,
 } from "@/functions";
 
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 const currentPage = ref(normalizePageHash());
 
@@ -26,8 +26,11 @@ const timelineItems = generateTimelineItems();
 
 const activities = ref(generateActivities());
 
-// обращение к реактивным переменным всегда через свойство value
-const activitySelectOptions = generateActivitySelectOptions(activities.value);
+// чтобы выполнить повторно функцию, зависящую от реактивных переменных
+// используется функция computed(() => {})
+const activitySelectOptions = computed(() =>
+  generateActivitySelectOptions(activities.value)
+);
 
 function deleteActivity(activity) {
   activities.value.splice(activities.value.indexOf(activity), 1);

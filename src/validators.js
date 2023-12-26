@@ -1,9 +1,5 @@
 import { NAV_ITEMS, HOURS_IN_DAY, MIDNIGHT_HOUR, BUTTON_TYPES } from "@/constants";
 
-function isNull(value) {
-    return value === null;
-}
-
 function isNumber(value) {
     return typeof value === 'number';
 }
@@ -23,6 +19,10 @@ function isSelectOptionValid({ value, label}) {
 
 function isNotEmptyString(value) {
     return isString(value) && value.length > 0
+}
+
+export function isNull(value) {
+    return value === null;
 }
 
 export function isUndefined(value) {
@@ -73,4 +73,8 @@ export function validateActivities(activities) {
 
 export function isButtonTypeValid(type) {
     return BUTTON_TYPES.includes(type);
+}
+
+export function isSelectValueValid(value) {
+    return isNotEmptyString(value) || isNumberOrNull(value);
 }

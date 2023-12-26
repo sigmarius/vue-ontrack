@@ -6,15 +6,16 @@ import BaseButton from "@/components/BaseButton.vue";
 import {
   validateSelectOptions,
   isUndefinedOrNull,
-  isNumberOrNull,
+  isSelectValueValid,
 } from "@/validators";
 
 import { BUTTON_TYPE_NEUTRAL } from "@/constants";
+import { normalizeSelectValue } from "@/functions";
 
 // defineProps(["options", "placeholder", "selected"]);
 
 const props = defineProps({
-  selected: Number,
+  selected: [String, Number],
   placeholder: {
     type: String,
     default: "Rest",
@@ -27,23 +28,27 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  select: isNumberOrNull,
+  select: isSelectValueValid,
 });
 
 // computed свойства определяются на основе значений других свойств
 // являются реактивными, и запускаются при изменении реактивных свойств
 const isNotSelected = computed(() => isUndefinedOrNull(props.selected));
+
+function select(value) {
+  emit("select", normalizeSelectValue(value));
+}
 </script>
 
 <template>
   <div class="flex gap-2">
-    <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select', null)">
+    <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="select(null)">
       <XMarkIcon class="h-8" />
     </BaseButton>
 
     <select
       class="py-1 px-2 w-full text-2xl truncate rounded bg-gray-100"
-      @change="emit('select', Number($event.target.value))"
+      @change="select($event.target.value)"
     >
       <option :selected="isNotSelected" disabled value="">
         {{ placeholder }}
