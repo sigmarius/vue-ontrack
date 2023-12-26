@@ -11,7 +11,7 @@ import { PERIOD_SELECT_OPTIONS, BUTTON_TYPE_DANGER } from "@/constants";
 
 defineProps({
   activity: {
-    type: String,
+    type: Object,
     required: true,
     // валидатор первым аргументом принимает пропс, который проверяет
     validator: isActivityValid,
