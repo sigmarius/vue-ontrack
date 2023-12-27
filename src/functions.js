@@ -27,13 +27,16 @@ export function normalizeSelectValue(value) {
 }
 
 export function generateTimelineItems() {
-  const TIMELINE_ITEMS = [];
+  const timelineItems = [];
 
   for (let hour = MIDNIGHT_HOUR; hour < HOURS_IN_DAY; hour++) {
-    TIMELINE_ITEMS.push({ hour });
+    timelineItems.push({
+      hour,
+      activityId: null
+     });
   }
 
-  return TIMELINE_ITEMS;
+  return timelineItems;
 }
 
 export function generateActivitySelectOptions(activities) {
