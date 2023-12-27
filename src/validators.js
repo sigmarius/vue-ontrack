@@ -1,9 +1,5 @@
 import { NAV_ITEMS, HOURS_IN_DAY, MIDNIGHT_HOUR, BUTTON_TYPES } from "@/constants";
 
-function isNumber(value) {
-    return typeof value === 'number';
-}
-
 function isString(value) {
     return typeof value === 'string';
 }
@@ -19,6 +15,10 @@ function isSelectOptionValid({ value, label}) {
 
 function isNotEmptyString(value) {
     return isString(value) && value.length > 0
+}
+
+export function isNumber(value) {
+    return typeof value === 'number';
 }
 
 export function isNull(value) {
