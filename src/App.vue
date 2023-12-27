@@ -22,7 +22,7 @@ function goToPage(page) {
   currentPage.value = page;
 }
 
-const timelineItems = generateTimelineItems();
+const timelineItems = ref(generateTimelineItems());
 
 const activities = ref(generateActivities());
 
@@ -33,7 +33,7 @@ const activitySelectOptions = computed(() =>
 );
 
 function deleteActivity(activity) {
-  timelineItems.forEach((timelineItem) => {
+  timelineItems.value.forEach((timelineItem) => {
     if (timelineItem.activityId === activity.id) {
       timelineItem.activityId = null;
     }
@@ -47,7 +47,7 @@ function createActivity(activity) {
 }
 
 function setTimelineItemActivity({ timelineItem, activity }) {
-  timelineItem.activityId = activity.id;
+  timelineItem.activityId = activity?.id || null;
 }
 </script>
 
