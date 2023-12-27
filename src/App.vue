@@ -33,6 +33,12 @@ const activitySelectOptions = computed(() =>
 );
 
 function deleteActivity(activity) {
+  timelineItems.forEach((timelineItem) => {
+    if (timelineItem.activityId === activity.id) {
+      timelineItem.activityId = null;
+    }
+  });
+
   activities.value.splice(activities.value.indexOf(activity), 1);
 }
 
@@ -40,7 +46,7 @@ function createActivity(activity) {
   activities.value.push(activity);
 }
 
-function setTimelineItemActivity({ timelineItem, activity}) {
+function setTimelineItemActivity({ timelineItem, activity }) {
   timelineItem.activityId = activity.id;
 }
 </script>
