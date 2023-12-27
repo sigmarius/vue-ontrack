@@ -28,6 +28,10 @@ export const SECONDS_IN_HOUR = 3600;
 export const HOURS_IN_DAY = 24;
 export const MIDNIGHT_HOUR = 0;
 
+export const NULLABLE_ACTIVITY = {
+  id: null
+}
+
 export const PERIOD_SELECT_OPTIONS = [
   {
     value: 1 * SECONDS_IN_HOUR,
