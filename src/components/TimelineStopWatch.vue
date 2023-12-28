@@ -10,7 +10,7 @@ import {
   MILLISECONDS_IN_SECOND,
 } from "@/constants";
 
-import { isNumber } from "@/validators";
+import { isHourValid, isNumber } from "@/validators";
 import { formatSeconds } from "@/functions";
 
 const props = defineProps({
@@ -19,12 +19,20 @@ const props = defineProps({
     default: 0,
     validator: isNumber,
   },
+  hour: {
+    type: Number,
+    required: true,
+    validator: isHourValid,
+  },
 });
 
 const seconds = ref(props.seconds);
 
 // по умолчанию секундомер остановлен
 const isRunning = ref(false);
+
+// кнопка включения секундомера доступна только для текущего часа
+const isStartButtonDisabled = props.hour !== new Date().getHours();
 
 function start() {
   // isRunning хранит ссылку на таймер
@@ -48,7 +56,7 @@ function reset() {
 
 <template>
   <div class="w-full flex gap-2">
-    <BaseButton :type="BUTTON_TYPE_DANGER" @click="reset">
+    <BaseButton :type="BUTTON_TYPE_DANGER" :disabled="!seconds" @click="reset">
       <ArrowPathIcon class="h-8" />
     </BaseButton>
 
@@ -58,16 +66,13 @@ function reset() {
       {{ formatSeconds(seconds) }}
     </div>
 
-    <BaseButton
-      v-if="isRunning"
-      :type="BUTTON_TYPE_WARNING"
-      @click="stop"
-    >
+    <BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
       <PauseIcon class="h-8" />
     </BaseButton>
 
     <BaseButton
       v-else
+      :disabled="isStartButtonDisabled"
       :type="BUTTON_TYPE_SUCCESS"
       @click="start"
     >
