@@ -4,12 +4,7 @@ import BaseSelect from "@/components/BaseSelect.vue";
 import TimelineHour from "@/components/TimelineHour.vue";
 import TimelineStopWatch from "@/components/TimelineStopWatch.vue";
 
-import {
-  isTimelineItemValid,
-  isActivityValid,
-  isHourValid,
-} from "@/validators";
-import { NULLABLE_ACTIVITY } from "@/constants";
+import { isTimelineItemValid, isHourValid } from "@/validators";
 
 defineProps({
   timelineItem: {
@@ -21,21 +16,13 @@ defineProps({
 
 // с помощью inject('key') можно получать свойства родительского компонента
 // по ключу key, указанному в родительском компоненте
-const activities = inject("activities");
 const activitySelectOptions = inject("activitySelectOptions");
 
+const setTimelineItemActivity = inject("setTimelineItemActivity");
+
 const emit = defineEmits({
-  selectActivity: isActivityValid,
   scrollToHour: isHourValid,
 });
-
-function selectActivity(id) {
-  emit("selectActivity", findActivityById(id));
-}
-
-function findActivityById(id) {
-  return activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY;
-}
 </script>
 
 <template>
@@ -49,7 +36,7 @@ function findActivityById(id) {
       :options="activitySelectOptions"
       :selected="timelineItem.activityId"
       placeholder="Rest"
-      @select="selectActivity"
+      @select="setTimelineItemActivity(timelineItem, $event)"
     />
 
     <TimelineStopWatch :timeline-item="timelineItem" />

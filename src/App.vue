@@ -11,7 +11,7 @@ import {
   generateTimelineItems,
   generateActivitySelectOptions,
   generateActivities,
-  generatePeriodSelectOptions
+  generatePeriodSelectOptions,
 } from "@/functions";
 
 import { ref, computed, provide } from "vue";
@@ -61,9 +61,8 @@ function createActivity(activity) {
   activities.value.push(activity);
 }
 
-function setTimelineItemActivity(timelineItem, activity) {
-  // timelineItem.activityId = activity?.id || null;
-  timelineItem.activityId = activity.id;
+function setTimelineItemActivity(timelineItem, activityId) {
+  timelineItem.activityId = activityId;
 }
 
 function setActivitySecondsToComplete(activity, secondsToComplete) {
@@ -76,13 +75,14 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 
 // функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
 provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
+provide("setTimelineItemActivity", setTimelineItemActivity);
 
+// доступ к результату выполнения функции
 provide("periodSelectOptions", generatePeriodSelectOptions());
 
 // также можно предоставлять доступ к свойствам родительского компонента
 // value -> если переменная является реактивной
 provide("timelineItems", timelineItems.value);
-provide("activities", activities.value);
 
 // также можно передавать и computed свойства, через value
 provide("activitySelectOptions", activitySelectOptions.value);
@@ -97,7 +97,6 @@ provide("activitySelectOptions", activitySelectOptions.value);
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
       :current-page="currentPage"
-      @set-timeline-item-activity="setTimelineItemActivity"
       ref="timeline"
     />
 
