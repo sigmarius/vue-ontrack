@@ -22,9 +22,9 @@ function goToPage(page) {
   currentPage.value = page;
 }
 
-const timelineItems = ref(generateTimelineItems());
-
 const activities = ref(generateActivities());
+
+const timelineItems = ref(generateTimelineItems(activities.value));
 
 // чтобы выполнить повторно функцию, зависящую от реактивных переменных
 // используется функция computed(() => {})
@@ -36,6 +36,7 @@ function deleteActivity(activity) {
   timelineItems.value.forEach((timelineItem) => {
     if (timelineItem.activityId === activity.id) {
       timelineItem.activityId = null;
+      timelineItem.activitySeconds = 0;
     }
   });
 
