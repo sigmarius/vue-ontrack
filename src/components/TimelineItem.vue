@@ -1,20 +1,15 @@
 <script setup>
 import BaseSelect from "@/components/BaseSelect.vue";
-import BaseButton from "@/components/BaseButton.vue";
 import TimelineHour from "@/components/TimelineHour.vue";
+import TimelineStopWatch from "@/components/TimelineStopWatch.vue";
+
 import {
   isTimelineItemValid,
   validateSelectOptions,
   isActivityValid,
   validateActivities,
 } from "@/validators";
-import {
-  NULLABLE_ACTIVITY,
-  BUTTON_TYPE_DANGER,
-  BUTTON_TYPE_WARNING,
-  BUTTON_TYPE_SUCCESS
-} from "@/constants";
-import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
+import { NULLABLE_ACTIVITY } from "@/constants";
 
 const props = defineProps({
   timelineItem: {
@@ -60,24 +55,6 @@ function findActivityById(id) {
       @select="selectActivity"
     />
 
-    <div class="w-full flex gap-2">
-      <BaseButton :type="BUTTON_TYPE_DANGER">
-        <ArrowPathIcon class="h-8" />
-      </BaseButton>
-
-      <div
-        class="px-2 flex grow items-center font-mono text-3xl rounded bg-gray-100"
-      >
-        00:00:00
-      </div>
-
-      <BaseButton :type="BUTTON_TYPE_WARNING">
-        <PauseIcon class="h-8" />
-      </BaseButton>
-
-      <BaseButton :type="BUTTON_TYPE_SUCCESS">
-        <PlayIcon class="h-8" />
-      </BaseButton>
-    </div>
+    <TimelineStopWatch :seconds="timelineItem.activitySeconds" />
   </li>
 </template>

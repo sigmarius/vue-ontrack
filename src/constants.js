@@ -34,6 +34,8 @@ const PERIODS_IN_MINUTES = [
     15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480
 ];
 
+export const MILLISECONDS_IN_SECOND = 1000;
+
 export const HOURS_IN_DAY = 24;
 export const MIDNIGHT_HOUR = 0;
 
