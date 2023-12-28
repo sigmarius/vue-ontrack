@@ -8,7 +8,8 @@ import {
   validateSelectOptions,
   isActivityValid,
   validateActivities,
-  isHourValid
+  validateTimelineItems,
+  isHourValid,
 } from "@/validators";
 import { NULLABLE_ACTIVITY } from "@/constants";
 
@@ -28,11 +29,16 @@ const props = defineProps({
     required: true,
     validator: validateActivities,
   },
+  timelineItems: {
+    type: Array,
+    required: true,
+    validator: validateTimelineItems,
+  },
 });
 
 const emit = defineEmits({
   selectActivity: isActivityValid,
-  scrollToHour: isHourValid
+  scrollToHour: isHourValid,
 });
 
 function selectActivity(id) {
