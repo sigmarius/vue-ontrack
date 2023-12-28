@@ -18,6 +18,17 @@ import { ref, computed } from "vue";
 const currentPage = ref(normalizePageHash());
 
 function goToPage(page) {
+  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
+    console.log("timeline", timeline.value);
+
+    // доступ предоставлен в компоненте TheTimeline через макрос defineExpose()
+    timeline.value.scrollToHour();
+  }
+
+  if (page !== PAGE_TIMELINE) {
+    document.body.scrollIntoView();
+  }
+
   // обновление значения реактивной переменной происходит через value
   currentPage.value = page;
 }
@@ -25,6 +36,8 @@ function goToPage(page) {
 const activities = ref(generateActivities());
 
 const timelineItems = ref(generateTimelineItems(activities.value));
+
+const timeline = ref();
 
 // чтобы выполнить повторно функцию, зависящую от реактивных переменных
 // используется функция computed(() => {})
@@ -69,6 +82,7 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
       :activities="activities"
       :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
+      ref="timeline"
     />
 
     <!-- в шаблоне ссылаться на свойство value для реактивных элементов не обязательно, vue сделает это автоматически -->
