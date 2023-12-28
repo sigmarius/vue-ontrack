@@ -1,40 +1,28 @@
 <script setup>
+import { inject } from "vue";
 import BaseSelect from "@/components/BaseSelect.vue";
 import TimelineHour from "@/components/TimelineHour.vue";
 import TimelineStopWatch from "@/components/TimelineStopWatch.vue";
 
 import {
   isTimelineItemValid,
-  validateSelectOptions,
   isActivityValid,
-  validateActivities,
-  validateTimelineItems,
   isHourValid,
 } from "@/validators";
 import { NULLABLE_ACTIVITY } from "@/constants";
 
-const props = defineProps({
+defineProps({
   timelineItem: {
     type: Object,
     required: true,
     validator: isTimelineItemValid,
   },
-  activitySelectOptions: {
-    type: Array,
-    required: true,
-    validator: validateSelectOptions,
-  },
-  activities: {
-    type: Array,
-    required: true,
-    validator: validateActivities,
-  },
-  timelineItems: {
-    type: Array,
-    required: true,
-    validator: validateTimelineItems,
-  },
 });
+
+// с помощью inject('key') можно получать свойства родительского компонента
+// по ключу key, указанному в родительском компоненте
+const activities = inject("activities");
+const activitySelectOptions = inject("activitySelectOptions");
 
 const emit = defineEmits({
   selectActivity: isActivityValid,
@@ -46,9 +34,7 @@ function selectActivity(id) {
 }
 
 function findActivityById(id) {
-  return (
-    props.activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY
-  );
+  return activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY;
 }
 </script>
 

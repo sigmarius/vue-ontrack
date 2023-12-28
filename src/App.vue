@@ -77,8 +77,12 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
 
 // также можно предоставлять доступ к свойствам родительского компонента
-// value -> так как переменная является реактивной
+// value -> если переменная является реактивной
 provide("timelineItems", timelineItems.value);
+provide("activities", activities.value);
+
+// также можно передавать и computed свойства, через value
+provide("activitySelectOptions", activitySelectOptions.value);
 </script>
 
 <template>
@@ -89,8 +93,6 @@ provide("timelineItems", timelineItems.value);
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
-      :activity-select-options="activitySelectOptions"
-      :activities="activities"
       :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
       ref="timeline"
