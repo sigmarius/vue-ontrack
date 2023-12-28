@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from "vue";
 import { formatSeconds, getTotalActivitySeconds } from "@/functions";
 import { isActivityValid, validateTimelineItems } from "@/validators";
 
@@ -15,16 +16,32 @@ const props = defineProps({
   },
 });
 
-const seconds = formatSeconds(
-  getTotalActivitySeconds(props.activity, props.timelineItems) -
+const sign = computed(() => (secondsDiff.value >= 0 ? "+" : "-"));
+
+const secondsDiff = computed(
+  () =>
+    getTotalActivitySeconds(props.activity, props.timelineItems) -
     props.activity.secondsToComplete
+);
+
+const colorClasses = computed(() =>
+  secondsDiff.value < 0
+    ? "text-red-600 bg-red-100"
+    : "text-green-600 bg-green-100"
+);
+
+const classes = computed(
+  () =>
+    `px-2 flex items-center font-mono font-bold text-lg text-purple-600 rounded bg-purple-100 ${colorClasses.value}`
+);
+
+const seconds = computed(
+  () => `${sign.value}${formatSeconds(secondsDiff.value)}`
 );
 </script>
 
 <template>
-  <div
-    class="px-2 flex items-center font-mono font-bold text-lg text-purple-600 rounded bg-purple-100"
-  >
+  <div :class="classes">
     {{ seconds }}
   </div>
 </template>
