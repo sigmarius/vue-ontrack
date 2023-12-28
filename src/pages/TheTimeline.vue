@@ -8,7 +8,6 @@ import {
   isTimelineItemValid,
   isActivityValid,
   isPageValid,
-  isNumber,
 } from "@/validators";
 
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "@/constants";
@@ -42,14 +41,9 @@ const emit = defineEmits({
       Boolean
     );
   },
-  updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
-    return [isTimelineItemValid(timelineItem), isNumber(activitySeconds)].every(
-      Boolean
-    );
-  },
 });
 
-// макрос defineExpose() предоставляет доступ к локальным функциям компонента для компонента-родителя
+// макрос defineExpose() предоставляет доступ к локальным функциям дочернего компонента для компонента-родителя
 defineExpose({ scrollToHour });
 
 const timelineItemRefs = ref([]);
@@ -96,9 +90,6 @@ function scrollToHour(hour = null, isSmooth = true) {
         :activities="activities"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
         @scroll-to-hour="scrollToHour"
-        @update-activity-seconds="
-          emit('updateTimelineItemActivitySeconds', timelineItem, $event)
-        "
         ref="timelineItemRefs"
       />
     </ul>

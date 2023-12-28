@@ -13,7 +13,10 @@ import {
   generateActivities,
 } from "@/functions";
 
-import { ref, computed } from "vue";
+import { ref, computed, provide } from "vue";
+
+// функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
+provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
 
 const currentPage = ref(normalizePageHash());
 
@@ -86,7 +89,6 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
       :activities="activities"
       :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
-      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
       ref="timeline"
     />
 

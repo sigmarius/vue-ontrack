@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -10,38 +10,35 @@ import {
   MILLISECONDS_IN_SECOND,
 } from "@/constants";
 
-import { isHourValid, isNumber } from "@/validators";
+import { isTimelineItemValid } from "@/validators";
 import { formatSeconds } from "@/functions";
 
+// функция inject предоставляет доступ к функции родительского компонента по ключу key, указанному при регистрации в родительском компоненте с помощью provide() функции
+const updateTimelineItemActivitySeconds = inject(
+  "updateTimelineItemActivitySeconds"
+);
+
 const props = defineProps({
-  seconds: {
-    type: Number,
-    default: 0,
-    validator: isNumber,
-  },
-  hour: {
-    type: Number,
+  timelineItem: {
+    type: Object,
     required: true,
-    validator: isHourValid,
+    validator: isTimelineItemValid,
   },
 });
 
-const emit = defineEmits({
-  updateSeconds: isNumber,
-});
-
-const seconds = ref(props.seconds);
+const seconds = ref(props.timelineItem.activitySeconds);
 
 // по умолчанию секундомер остановлен
 const isRunning = ref(false);
 
 // кнопка включения секундомера доступна только для текущего часа
-const isStartButtonDisabled = props.hour !== new Date().getHours();
+const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
 
 function start() {
   // isRunning хранит ссылку на таймер
   isRunning.value = setInterval(() => {
-    emit("updateSeconds", 1);
+    // используем функцию родительского компонента через provide/inject
+    updateTimelineItemActivitySeconds(props.timelineItem, 1);
 
     seconds.value++;
   }, MILLISECONDS_IN_SECOND);
@@ -56,8 +53,8 @@ function stop() {
 function reset() {
   stop();
 
-  // отправляем время, которое прошло до момента нажатия на сброс
-  emit("updateSeconds", -seconds.value);
+  // используем функцию родительского компонента через provide/inject
+  updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
 
   seconds.value = 0;
 }
