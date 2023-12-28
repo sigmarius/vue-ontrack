@@ -11,6 +11,7 @@ import {
   generateTimelineItems,
   generateActivitySelectOptions,
   generateActivities,
+  generatePeriodSelectOptions
 } from "@/functions";
 
 import { ref, computed, provide } from "vue";
@@ -75,6 +76,8 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 
 // функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
 provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
+
+provide("periodSelectOptions", generatePeriodSelectOptions());
 
 // также можно предоставлять доступ к свойствам родительского компонента
 // value -> если переменная является реактивной
