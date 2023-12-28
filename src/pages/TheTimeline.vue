@@ -55,18 +55,22 @@ watchPostEffect(async () => {
     await nextTick();
 
     // получаем текущий час
-    scrollToHour(new Date().getHours());
+    scrollToHour(null, false);
   }
 });
 
-function scrollToHour(hour) {
-  // определяем текущий час
-  // const currentHour = new Date().getHours();
+function scrollToHour(hour = null, isSmooth = true) {
+  const options = {
+    behavior: isSmooth ? "smooth" : "instant",
+  };
+
+  // если первый параметр не указан, присваивание выполняется
+  hour ??= new Date().getHours();
 
   // $el - получает корневой элемент vue-компонента
   hour === MIDNIGHT_HOUR
-    ? document.body.scrollIntoView()
-    : timelineItemRefs.value[hour - 1].$el.scrollIntoView();
+    ? document.body.scrollIntoView(options)
+    : timelineItemRefs.value[hour - 1].$el.scrollIntoView(options);
 }
 </script>
 
