@@ -26,6 +26,10 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits({
+  updateSeconds: isNumber,
+});
+
 const seconds = ref(props.seconds);
 
 // по умолчанию секундомер остановлен
@@ -37,6 +41,8 @@ const isStartButtonDisabled = props.hour !== new Date().getHours();
 function start() {
   // isRunning хранит ссылку на таймер
   isRunning.value = setInterval(() => {
+    emit("updateSeconds", 1);
+
     seconds.value++;
   }, MILLISECONDS_IN_SECOND);
 }
@@ -49,6 +55,9 @@ function stop() {
 
 function reset() {
   stop();
+
+  // отправляем время, которое прошло до момента нажатия на сброс
+  emit("updateSeconds", -seconds.value);
 
   seconds.value = 0;
 }

@@ -68,6 +68,10 @@ function setTimelineItemActivity(timelineItem, activity) {
 function setActivitySecondsToComplete(activity, secondsToComplete) {
   activity.secondsToComplete = secondsToComplete;
 }
+
+function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
+  timelineItem.activitySeconds += activitySeconds;
+}
 </script>
 
 <template>
@@ -82,6 +86,7 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
       :activities="activities"
       :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
+      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
       ref="timeline"
     />
 
