@@ -15,9 +15,6 @@ import {
 
 import { ref, computed, provide } from "vue";
 
-// функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
-provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
-
 const currentPage = ref(normalizePageHash());
 
 function goToPage(page) {
@@ -75,6 +72,13 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
 function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
   timelineItem.activitySeconds += activitySeconds;
 }
+
+// функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
+provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
+
+// также можно предоставлять доступ к свойствам родительского компонента
+// value -> так как переменная является реактивной
+provide("timelineItems", timelineItems.value);
 </script>
 
 <template>
@@ -96,7 +100,6 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
-      :timeline-items="timelineItems"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
       @set-activity-seconds-to-complete="setActivitySecondsToComplete"
