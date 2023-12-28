@@ -51,22 +51,22 @@ const timelineItemRefs = ref([]);
 // watchPostEffect(() => {}) вызывается каждый раз после изменения значения реактивной переменной и перерисовки DOM-дерева
 watchPostEffect(async () => {
   if (props.currentPage === PAGE_TIMELINE) {
-
     // ждем пока vue обновит страницу
     await nextTick();
 
-    scrollToCurrentTimelineItem();
+    // получаем текущий час
+    scrollToHour(new Date().getHours());
   }
 });
 
-function scrollToCurrentTimelineItem() {
+function scrollToHour(hour) {
   // определяем текущий час
-  const currentHour = new Date().getHours();
+  // const currentHour = new Date().getHours();
 
   // $el - получает корневой элемент vue-компонента
-  currentHour === MIDNIGHT_HOUR
+  hour === MIDNIGHT_HOUR
     ? document.body.scrollIntoView()
-    : timelineItemRefs.value[currentHour - 1].$el.scrollIntoView();
+    : timelineItemRefs.value[hour - 1].$el.scrollIntoView();
 }
 </script>
 
@@ -81,6 +81,7 @@ function scrollToCurrentTimelineItem() {
         :activity-select-options="activitySelectOptions"
         :activities="activities"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
+        @scroll-to-hour="scrollToHour"
         ref="timelineItemRefs"
       />
     </ul>
