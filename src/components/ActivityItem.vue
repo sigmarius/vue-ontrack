@@ -8,6 +8,8 @@ import { isActivityValid, isUndefined, isNumber } from "@/validators";
 
 import { PERIOD_SELECT_OPTIONS, BUTTON_TYPE_DANGER } from "@/constants";
 
+import ActivitySecondsToComplete from "@/components/ActivitySecondsToComplete.vue";
+
 defineProps({
   activity: {
     type: Object,
@@ -32,13 +34,18 @@ const emit = defineEmits({
       <span class="text-xl truncate">{{ activity.name }}</span>
     </div>
 
-    <div>
+    <div class="flex gap-2">
       <BaseSelect
         :options="PERIOD_SELECT_OPTIONS"
         placeholder="hh:mm"
         :selected="activity.secondsToComplete || null"
         @select="emit('setSecondsToComplete', $event || 0)"
-        class="font-mono"
+        class="grow font-mono"
+      />
+
+      <ActivitySecondsToComplete
+        v-if="activity.secondsToComplete"
+        :activity="activity"
       />
     </div>
   </li>
