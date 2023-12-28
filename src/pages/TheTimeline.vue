@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { watchPostEffect, ref, nextTick } from "vue";
 import TimelineItem from "@/components/TimelineItem.vue";
 import {
   validateTimelineItems,
@@ -7,11 +7,12 @@ import {
   validateActivities,
   isTimelineItemValid,
   isActivityValid,
+  isPageValid,
 } from "@/validators";
 
-import { MIDNIGHT_HOUR } from "@/constants";
+import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "@/constants";
 
-defineProps({
+const props = defineProps({
   timelineItems: {
     type: Array,
     required: true,
@@ -27,6 +28,11 @@ defineProps({
     required: true,
     validator: validateActivities,
   },
+  currentPage: {
+    type: String,
+    required: true,
+    validator: isPageValid,
+  },
 });
 
 const emit = defineEmits({
@@ -39,8 +45,19 @@ const emit = defineEmits({
 
 const timelineItemRefs = ref([]);
 
-// хук onMounted(() => {}) позволяет выполнить код после того, как vue-компонент будет полностью готов, и все его элементы будут отрендерены в DOM-дереве
-onMounted(scrollToCurrentTimelineItem);
+// хук onMounted(() => {}) позволяет выполнить код после того, как vue-компонент будет полностью готов, и все его элементы будут отрендерены в DOM-дереве, выполняется только один раз
+
+// watchEffect(() => {}) вызывается каждый раз при изменении значения реактивной переменной
+// watchPostEffect(() => {}) вызывается каждый раз после изменения значения реактивной переменной и перерисовки DOM-дерева
+watchPostEffect(async () => {
+  if (props.currentPage === PAGE_TIMELINE) {
+
+    // ждем пока vue обновит страницу
+    await nextTick();
+
+    scrollToCurrentTimelineItem();
+  }
+});
 
 function scrollToCurrentTimelineItem() {
   // определяем текущий час
