@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -31,10 +31,19 @@ const isRunning = ref(false);
 // кнопка включения секундомера доступна только для текущего часа
 const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();
 
+// функция отслеживает изменение реактивной переменной
+// предпринимает действия при изменении ее состояния
+watch(
+  () => props.timelineItem.activityId,
+  () => {
+    updateTimelineItemActivitySeconds(props.timelineItem, seconds.value)
+  }
+);
+
 function start() {
   // isRunning хранит ссылку на таймер
   isRunning.value = setInterval(() => {
-    updateTimelineItemActivitySeconds(props.timelineItem, 1);
+    updateTimelineItemActivitySeconds(props.timelineItem, props.timelineItem.activitySeconds + 1);
 
     seconds.value++;
   }, MILLISECONDS_IN_SECOND);
@@ -49,7 +58,10 @@ function stop() {
 function reset() {
   stop();
 
-  updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
+  updateTimelineItemActivitySeconds(
+    props.timelineItem,
+    props.timelineItem.activitySeconds - seconds.value
+  );
 
   seconds.value = 0;
 }
