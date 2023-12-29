@@ -52,12 +52,15 @@ provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
 
 // также можно предоставлять доступ к свойствам родительского компонента
 // value -> если переменная является реактивной
+// через provide всегда передается сама переменная, без value
 // readonly => запрещает модификацию данных из дочернего компонента
-provide(keys.timelineItemsKey, readonly(timelineItems.value));
+provide(keys.timelineItemsKey, readonly(timelineItems));
 
 // также можно передавать и computed свойства, через value
 // readonly => запрещает модификацию данных из дочернего компонента
-provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions.value));
+// .value обеспечивает доступ к начальному состоянию переменной,
+// для сохранения реактивности между модулями через provide нужно передавать саму переменную
+provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions));
 </script>
 
 <template>
