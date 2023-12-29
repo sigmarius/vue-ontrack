@@ -4,7 +4,7 @@ import { nextTick, ref } from "vue";
 import { createActivity } from "@/activities"
 
 import BaseButton from "@/components/BaseButton.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
+import BaseIcon from "@/components/BaseIcon.vue";
 import { id } from "@/functions";
 
 // для реактивной переменной модицицируется поле value
@@ -42,7 +42,7 @@ async function submit() {
     />
 
     <BaseButton :disabled="name.trim() === ''">
-      <PlusIcon class="h-8" />
+      <BaseIcon name="Plus" class="h-8" />
     </BaseButton>
   </form>
 </template>

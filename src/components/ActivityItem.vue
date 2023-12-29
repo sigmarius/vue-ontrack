@@ -1,8 +1,7 @@
 <script setup>
-import { TrashIcon } from "@heroicons/vue/24/outline";
-
 import BaseButton from "@/components/BaseButton.vue";
 import BaseSelect from "@/components/BaseSelect.vue";
+import BaseIcon from "@/components/BaseIcon.vue";
 
 import { isActivityValid } from "@/validators";
 
@@ -32,7 +31,7 @@ function deleteAndResetActivity(activity) {
   <li class="p-4 flex flex-col gap-2">
     <div class="flex items-center gap-2">
       <BaseButton :type="BUTTON_TYPE_DANGER" @click="deleteAndResetActivity(activity)">
-        <TrashIcon class="h-8" />
+        <BaseIcon name="Trash" class="h-8" />
       </BaseButton>
       <span class="text-xl truncate">{{ activity.name }}</span>
     </div>
