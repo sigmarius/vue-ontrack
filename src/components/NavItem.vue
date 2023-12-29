@@ -2,31 +2,32 @@
 import { computed } from "vue";
 
 import { currentPage, navigate } from "@/router";
-import { isPageValid } from "@/validators";
+import { isNavItemValid } from "@/validators";
 
 // определяем константу props если ссылаемся на пропсы в теге <script>
 const props = defineProps({
-  page: {
-    type: String,
+  navItem: {
+    type: Object,
     required: true,
-    validator: isPageValid,
+    validator: isNavItemValid,
   },
 });
 
 const classes = computed(() => [
   "p-2 flex flex-col items-center text-xs capitalize",
-  { "bg-gray-200 pointer-events-none": props.page === currentPage.value },
+  { "bg-gray-200 pointer-events-none": props.navItem.page === currentPage.value },
 ]);
 </script>
 
 <template>
   <li class="flex-1">
     <a
-      :href="`#${page}`"
+      :href="`#${navItem.page}`"
       :class="classes"
-      @click="navigate(page)"
+      @click="navigate(navItem.page)"
     >
-      <slot></slot>
+        <component :is="navItem.icon" class="h-6 w-6" />
+        {{ navItem.page }}
     </a>
   </li>
 </template>
