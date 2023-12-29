@@ -28,6 +28,7 @@ import {
   timelineItems,
   setTimelineItemActivity,
   updateTimelineItemActivitySeconds,
+  resetTimelineItemActivities
 } from "@/timeline-items";
 
 // функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
@@ -39,7 +40,10 @@ provide(keys.setTimelineItemActivityKey, setTimelineItemActivity);
 provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete);
 
 provide(keys.createActivityKey, createActivity);
-provide(keys.deleteActivityKey, deleteActivity);
+provide(keys.deleteActivityKey, (activity) => {
+  resetTimelineItemActivities(activity);
+  deleteActivity(activity);
+});
 
 // доступ к результату выполнения функции
 // readonly => запрещает модификацию данных из дочернего компонента

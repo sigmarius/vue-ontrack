@@ -1,5 +1,4 @@
 import {
-  HOURS_IN_DAY,
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
@@ -21,20 +20,6 @@ export function normalizeSelectValue(value) {
   return isNull(value) || isNaN(value)
     ? value
     : Number(value);
-}
-
-export function generateTimelineItems(activities) {
-  return [...Array(HOURS_IN_DAY).keys()]
-    .map(hour => ({
-      hour,
-      // для удобства тестирования делаем активными первые 5 часов
-      activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
-      activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0
-
-      // случайным образом рассчитываем activityId и activitySeconds
-      // activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
-      // activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR
-    }));
 }
 
 export function generateActivitySelectOptions(activities) {
