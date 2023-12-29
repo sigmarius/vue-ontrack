@@ -8,48 +8,27 @@ import TheProgress from "@/pages/TheProgress.vue";
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from "@/constants";
 import {
   generateTimelineItems,
-  generateActivitySelectOptions,
-  generateActivities,
   generatePeriodSelectOptions,
 } from "@/functions";
 
 import { currentPage, timelineRef } from "@/router";
 
-import { ref, computed, provide, readonly } from "vue";
+import { ref, provide, readonly } from "vue";
 
 import * as keys from "@/keys";
 
-const activities = ref(generateActivities());
+import {
+  activities,
+  activitySelectOptions,
+  createActivity,
+  deleteActivity,
+  setActivitySecondsToComplete,
+} from "@/components/activities";
 
 const timelineItems = ref(generateTimelineItems(activities.value));
 
-// чтобы выполнить повторно функцию, зависящую от реактивных переменных
-// используется функция computed(() => {})
-const activitySelectOptions = computed(() =>
-  generateActivitySelectOptions(activities.value)
-);
-
-function deleteActivity(activity) {
-  timelineItems.value.forEach((timelineItem) => {
-    if (timelineItem.activityId === activity.id) {
-      timelineItem.activityId = null;
-      timelineItem.activitySeconds = 0;
-    }
-  });
-
-  activities.value.splice(activities.value.indexOf(activity), 1);
-}
-
-function createActivity(activity) {
-  activities.value.push(activity);
-}
-
 function setTimelineItemActivity(timelineItem, activityId) {
   timelineItem.activityId = activityId;
-}
-
-function setActivitySecondsToComplete(activity, secondsToComplete) {
-  activity.secondsToComplete = secondsToComplete || 0;
 }
 
 function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
@@ -57,7 +36,10 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 }
 
 // функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
-provide(keys.updateTimelineItemActivitySecondsKey, updateTimelineItemActivitySeconds);
+provide(
+  keys.updateTimelineItemActivitySecondsKey,
+  updateTimelineItemActivitySeconds
+);
 provide(keys.setTimelineItemActivityKey, setTimelineItemActivity);
 provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete);
 
