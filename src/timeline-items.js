@@ -1,7 +1,7 @@
-import { ref } from 'vue'
-import { activities } from '@/activities'
-
-import { HOURS_IN_DAY } from '@/constants'
+import { ref } from 'vue';
+import { activities } from '@/activities';
+import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants';
+import { getCurrentHour } from '@/functions';
 
 function generateTimelineItems() {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
@@ -21,6 +21,8 @@ function hasActivity(timelineItem, activity) {
 }
 
 export const timelineItems = ref(generateTimelineItems())
+
+export const timelineItemRefs = ref([]);
 
 export function updateTimelineItem(timelineItem, fields) {
   return Object.assign(timelineItem, fields)
@@ -42,4 +44,19 @@ export function getTotalActivitySeconds(activity) {
       (totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds),
       0
     )
+}
+
+export function scrollToHour(hour = null, isSmooth = true) {
+  // если первый параметр не указан, присваивание выполняется
+  hour ??= getCurrentHour();
+
+  // $el - получает корневой элемент vue-компонента
+  const el =
+    hour === MIDNIGHT_HOUR
+      ? document.body
+      : timelineItemRefs.value[hour - 1].$el;
+
+  el.scrollIntoView({
+    behavior: isSmooth ? "smooth" : "instant",
+  });
 }

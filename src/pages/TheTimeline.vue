@@ -1,15 +1,9 @@
 <script setup>
-import { watchPostEffect, ref, nextTick } from "vue";
+import { watchPostEffect, nextTick } from "vue";
 import TimelineItem from "@/components/TimelineItem.vue";
-import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "@/constants";
+import { PAGE_TIMELINE } from "@/constants";
 import { currentPage } from "@/router";
-import { getCurrentHour } from "@/functions";
-import { timelineItems } from "@/timeline-items";
-
-// макрос defineExpose() предоставляет доступ к локальным функциям дочернего компонента для компонента-родителя
-defineExpose({ scrollToHour });
-
-const timelineItemRefs = ref([]);
+import { timelineItems, timelineItemRefs, scrollToHour } from "@/timeline-items";
 
 // хук onMounted(() => {}) позволяет выполнить код после того, как vue-компонент будет полностью готов, и все его элементы будут отрендерены в DOM-дереве, выполняется только один раз
 
@@ -24,21 +18,6 @@ watchPostEffect(async () => {
     scrollToHour(null, false);
   }
 });
-
-function scrollToHour(hour = null, isSmooth = true) {
-  // если первый параметр не указан, присваивание выполняется
-  hour ??= getCurrentHour();
-
-  // $el - получает корневой элемент vue-компонента
-  const el =
-    hour === MIDNIGHT_HOUR
-      ? document.body
-      : timelineItemRefs.value[hour - 1].$el;
-
-  el.scrollIntoView({
-    behavior: isSmooth ? "smooth" : "instant",
-  });
-}
 </script>
 
 <template>
