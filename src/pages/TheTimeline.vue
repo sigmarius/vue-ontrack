@@ -1,8 +1,6 @@
 <script setup>
-import { watchPostEffect, nextTick } from "vue";
+import { onActivated } from "vue";
 import TimelineItem from "@/components/TimelineItem.vue";
-import { PAGE_TIMELINE } from "@/constants";
-import { currentPage } from "@/router";
 import {
   timelineItems,
   timelineItemRefs,
@@ -14,15 +12,14 @@ import {
 
 // watchEffect(() => {}) вызывается каждый раз при изменении значения реактивной переменной
 // watchPostEffect(() => {}) вызывается каждый раз после изменения значения реактивной переменной и перерисовки DOM-дерева
-watchPostEffect(async () => {
-  if (currentPage.value === PAGE_TIMELINE) {
-    // ждем пока vue обновит страницу
-    await nextTick();
 
-    // получаем текущий час
-    scrollToCurrentHour(false);
-  }
-});
+// onActivated(() => {}) выполняется при активации компонента страницы
+// onActivated(() => {
+//   scrollToCurrentHour(false);
+// });
+
+// короткая запись
+onActivated(scrollToCurrentHour);
 </script>
 
 <template>
