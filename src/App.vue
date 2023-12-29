@@ -76,6 +76,7 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 // функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
 provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
 provide("setTimelineItemActivity", setTimelineItemActivity);
+provide("setActivitySecondsToComplete", setActivitySecondsToComplete);
 
 // доступ к результату выполнения функции
 provide("periodSelectOptions", generatePeriodSelectOptions());
@@ -106,7 +107,6 @@ provide("activitySelectOptions", activitySelectOptions.value);
       :activities="activities"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
-      @set-activity-seconds-to-complete="setActivitySecondsToComplete"
     />
 
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
