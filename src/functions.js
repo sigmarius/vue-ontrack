@@ -1,5 +1,4 @@
 import {
-  SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND
@@ -22,25 +21,9 @@ export function normalizeSelectValue(value) {
     : Number(value);
 }
 
-export function generateActivitySelectOptions(activities) {
-  return activities.map(activity => ({
-    label: activity.name,
-    value: activity.id
-  }));
-}
-
 export function id() {
   // указываем произвольную систему счистления для генерации случайных id
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
-}
-
-export function generateActivities() {
-  return ['Coding', 'Training', 'Reading']
-  .map((name, idx) => ({
-      id: id(),
-      name,
-      secondsToComplete: idx * SECONDS_IN_HOUR
-  }))
 }
 
 export function generatePeriodSelectOptions() {
