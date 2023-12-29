@@ -35,17 +35,18 @@ watchPostEffect(async () => {
 });
 
 function scrollToHour(hour = null, isSmooth = true) {
-  const options = {
-    behavior: isSmooth ? "smooth" : "instant",
-  };
-
   // если первый параметр не указан, присваивание выполняется
   hour ??= new Date().getHours();
 
   // $el - получает корневой элемент vue-компонента
-  hour === MIDNIGHT_HOUR
-    ? document.body.scrollIntoView(options)
-    : timelineItemRefs.value[hour - 1].$el.scrollIntoView(options);
+  const el =
+    hour === MIDNIGHT_HOUR
+      ? document.body
+      : timelineItemRefs.value[hour - 1].$el;
+
+  el.scrollIntoView({
+    behavior: isSmooth ? "smooth" : "instant",
+  });
 }
 </script>
 

@@ -1,12 +1,11 @@
 import {
-  PAGE_TIMELINE,
   HOURS_IN_DAY,
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND
 } from "@/constants";
-import { isPageValid, isNull } from "@/validators";
+import { isNull } from "@/validators";
 
 function generatePeriodSelectOptionsLabel(period) {
   // получаем количество часов в переменной
@@ -16,20 +15,6 @@ function generatePeriodSelectOptionsLabel(period) {
   const minutes = (period % MINUTES_IN_HOUR).toString().padStart(2, 0);
 
   return `${hours}:${minutes}`;
-}
-
-export function normalizePageHash() {
-  const page = window.location.hash.slice(1);
-
-  if (
-    isPageValid(page)
-  ) {
-    return page;
-  }
-
-  window.location.hash = PAGE_TIMELINE;
-
-  return PAGE_TIMELINE;
 }
 
 export function normalizeSelectValue(value) {
