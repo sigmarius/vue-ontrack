@@ -23,7 +23,7 @@ import {
   createActivity,
   deleteActivity,
   setActivitySecondsToComplete,
-} from "@/components/activities";
+} from "@/activities";
 
 const timelineItems = ref(generateTimelineItems(activities.value));
 
@@ -87,3 +87,4 @@ provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions));
 </template>
 
 <style scoped></style>
+@/activities
