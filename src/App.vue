@@ -77,6 +77,7 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
 provide("setTimelineItemActivity", setTimelineItemActivity);
 provide("setActivitySecondsToComplete", setActivitySecondsToComplete);
+provide("createActivity", createActivity);
 
 // доступ к результату выполнения функции
 provide("periodSelectOptions", generatePeriodSelectOptions());
@@ -106,7 +107,6 @@ provide("activitySelectOptions", activitySelectOptions.value);
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
       @delete-activity="deleteActivity"
-      @create-activity="createActivity"
     />
 
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
