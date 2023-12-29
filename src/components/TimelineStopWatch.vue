@@ -11,12 +11,14 @@ import {
 } from "@/constants";
 
 import { isTimelineItemValid } from "@/validators";
-import { formatSeconds } from "@/functions";
+import { formatSeconds, getCurrentHour } from "@/functions";
 
 import { updateTimelineItemActivitySecondsKey } from "@/keys";
 
 // функция inject предоставляет доступ к функции родительского компонента по ключу key, указанному при регистрации в родительском компоненте с помощью provide() функции
-const updateTimelineItemActivitySeconds = inject(updateTimelineItemActivitySecondsKey);
+const updateTimelineItemActivitySeconds = inject(
+  updateTimelineItemActivitySecondsKey
+);
 
 const props = defineProps({
   timelineItem: {
@@ -32,7 +34,7 @@ const seconds = ref(props.timelineItem.activitySeconds);
 const isRunning = ref(false);
 
 // кнопка включения секундомера доступна только для текущего часа
-const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
+const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();
 
 function start() {
   // isRunning хранит ссылку на таймер

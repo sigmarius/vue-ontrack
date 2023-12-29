@@ -7,6 +7,8 @@ import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "@/constants";
 
 import { currentPage } from "@/router";
 
+import { getCurrentHour } from "@/functions";
+
 defineProps({
   timelineItems: {
     type: Array,
@@ -36,7 +38,7 @@ watchPostEffect(async () => {
 
 function scrollToHour(hour = null, isSmooth = true) {
   // если первый параметр не указан, присваивание выполняется
-  hour ??= new Date().getHours();
+  hour ??= getCurrentHour();
 
   // $el - получает корневой элемент vue-компонента
   const el =
@@ -59,7 +61,7 @@ function scrollToHour(hour = null, isSmooth = true) {
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
         :timeline-items="timelineItems"
-        @scroll-to-hour="scrollToHour"
+        @scroll-to-hour="scrollToHour(timelineItem.hour)"
         ref="timelineItemRefs"
       />
     </ul>

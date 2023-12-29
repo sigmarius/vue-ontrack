@@ -48,7 +48,7 @@ const deleteActivity = inject(deleteActivityKey);
         placeholder="hh:mm"
         :selected="activity.secondsToComplete || null"
         class="grow font-mono"
-        @select="setActivitySecondsToComplete(activity, $event || 0)"
+        @select="setActivitySecondsToComplete(activity, $event)"
       />
 
       <ActivitySecondsToComplete

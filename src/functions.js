@@ -86,3 +86,7 @@ export function getTotalActivitySeconds(activity, timelineItems) {
     .filter(timelineItem => timelineItem.activityId === activity.id)
     .reduce((totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds), 0);
 }
+
+export function getCurrentHour() {
+  return new Date().getHours();
+}

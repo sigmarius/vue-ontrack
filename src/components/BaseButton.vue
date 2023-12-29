@@ -21,18 +21,22 @@ const typeClasses = {
 <script setup>
 import { isButtonTypeValid } from "@/validators";
 
-defineProps({
+const props = defineProps({
   type: {
     type: String,
     default: BUTTON_TYPE_PRIMARY,
     validator: isButtonTypeValid,
   },
 });
+
+const classes =
+  `${typeClasses[props.type]} p-3 rounded disabled:cursor-not-allowed disabled:opacity-50`;
+;
 </script>
 
 <template>
   <button
-    :class="`${typeClasses[type]} p-3 rounded disabled:cursor-not-allowed disabled:opacity-50`"
+    :class="classes"
   >
     <slot></slot>
   </button>
