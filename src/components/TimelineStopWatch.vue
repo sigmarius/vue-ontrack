@@ -1,5 +1,5 @@
 <script setup>
-import { ref, inject } from "vue";
+import { ref } from "vue";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -13,12 +13,7 @@ import {
 import { isTimelineItemValid } from "@/validators";
 import { formatSeconds, getCurrentHour } from "@/functions";
 
-import { updateTimelineItemActivitySecondsKey } from "@/keys";
-
-// функция inject предоставляет доступ к функции родительского компонента по ключу key, указанному при регистрации в родительском компоненте с помощью provide() функции
-const updateTimelineItemActivitySeconds = inject(
-  updateTimelineItemActivitySecondsKey
-);
+import { updateTimelineItemActivitySeconds } from "@/timeline-items";
 
 const props = defineProps({
   timelineItem: {
@@ -39,7 +34,6 @@ const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();
 function start() {
   // isRunning хранит ссылку на таймер
   isRunning.value = setInterval(() => {
-    // используем функцию родительского компонента через provide/inject
     updateTimelineItemActivitySeconds(props.timelineItem, 1);
 
     seconds.value++;
@@ -55,7 +49,6 @@ function stop() {
 function reset() {
   stop();
 
-  // используем функцию родительского компонента через provide/inject
   updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
 
   seconds.value = 0;

@@ -1,7 +1,6 @@
 <script setup>
-import { inject } from "vue";
-
-import { activitySelectOptionsKey, setTimelineItemActivityKey } from "@/keys";
+import { setTimelineItemActivity } from "@/timeline-items";
+import { activitySelectOptions } from "@/activities";
 
 import BaseSelect from "@/components/BaseSelect.vue";
 import TimelineHour from "@/components/TimelineHour.vue";
@@ -16,12 +15,6 @@ defineProps({
     validator: isTimelineItemValid,
   },
 });
-
-// с помощью inject('key') можно получать свойства родительского компонента
-// по ключу key, указанному в родительском компоненте
-const activitySelectOptions = inject(activitySelectOptionsKey);
-
-const setTimelineItemActivity = inject(setTimelineItemActivityKey);
 
 const emit = defineEmits({
   scrollToHour: isUndefined,
