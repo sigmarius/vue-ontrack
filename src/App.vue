@@ -13,7 +13,7 @@ import {
   generatePeriodSelectOptions,
 } from "@/functions";
 
-import { currentPage, navigate, timelineRef } from "@/router";
+import { currentPage, timelineRef } from "@/router";
 
 import { ref, computed, provide } from "vue";
 
@@ -75,13 +75,12 @@ provide("activitySelectOptions", activitySelectOptions.value);
 
 <template>
   <!-- @go-to-timeline в html атрибуты пишутся в кебаб-кейс -->
-  <TheHeader @navigate="navigate" />
+  <TheHeader />
 
   <main class="flex flex-col flex-grow">
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
-      :current-page="currentPage"
       ref="timelineRef"
     />
 
@@ -94,10 +93,7 @@ provide("activitySelectOptions", activitySelectOptions.value);
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
 
-  <!-- :current-page передаем пропс в дочерний компонент в кебаб-кейс -->
-  <!-- @navigate слушаем событие, переданное из дочернего компонента -->
-  <!-- $event данные, переданные вторым аргументом из дочернего компонента -->
-  <TheNav :current-page="currentPage" @navigate="navigate" />
+  <TheNav />
 </template>
 
 <style scoped></style>

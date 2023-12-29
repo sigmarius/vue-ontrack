@@ -11,9 +11,7 @@ export function navigate(page) {
 
     // доступ предоставлен в компоненте TheTimeline через макрос defineExpose()
     timelineRef.value.scrollToHour();
-  }
-
-  if (page !== PAGE_TIMELINE) {
+  } else if (page !== PAGE_TIMELINE) {
     document.body.scrollIntoView();
   }
 

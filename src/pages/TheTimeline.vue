@@ -1,20 +1,17 @@
 <script setup>
 import { watchPostEffect, ref, nextTick } from "vue";
 import TimelineItem from "@/components/TimelineItem.vue";
-import { validateTimelineItems, isPageValid } from "@/validators";
+import { validateTimelineItems } from "@/validators";
 
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "@/constants";
 
-const props = defineProps({
+import { currentPage } from "@/router";
+
+defineProps({
   timelineItems: {
     type: Array,
     required: true,
     validator: validateTimelineItems,
-  },
-  currentPage: {
-    type: String,
-    required: true,
-    validator: isPageValid,
   },
 });
 
@@ -28,7 +25,7 @@ const timelineItemRefs = ref([]);
 // watchEffect(() => {}) вызывается каждый раз при изменении значения реактивной переменной
 // watchPostEffect(() => {}) вызывается каждый раз после изменения значения реактивной переменной и перерисовки DOM-дерева
 watchPostEffect(async () => {
-  if (props.currentPage === PAGE_TIMELINE) {
+  if (currentPage.value === PAGE_TIMELINE) {
     // ждем пока vue обновит страницу
     await nextTick();
 
