@@ -13,10 +13,10 @@ import {
 import { isTimelineItemValid } from "@/validators";
 import { formatSeconds } from "@/functions";
 
+import { updateTimelineItemActivitySecondsKey } from "@/keys";
+
 // функция inject предоставляет доступ к функции родительского компонента по ключу key, указанному при регистрации в родительском компоненте с помощью provide() функции
-const updateTimelineItemActivitySeconds = inject(
-  "updateTimelineItemActivitySeconds"
-);
+const updateTimelineItemActivitySeconds = inject(updateTimelineItemActivitySecondsKey);
 
 const props = defineProps({
   timelineItem: {

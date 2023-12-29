@@ -1,5 +1,11 @@
 <script setup>
 import { inject } from "vue";
+import {
+  periodSelectOptionsKey,
+  setActivitySecondsToCompleteKey,
+  deleteActivityKey,
+} from "@/keys";
+
 import { TrashIcon } from "@heroicons/vue/24/outline";
 
 import BaseButton from "@/components/BaseButton.vue";
@@ -20,11 +26,11 @@ defineProps({
   },
 });
 
-const periodSelectOptions = inject("periodSelectOptions");
+const periodSelectOptions = inject(periodSelectOptionsKey);
 
-const setActivitySecondsToComplete = inject("setActivitySecondsToComplete");
+const setActivitySecondsToComplete = inject(setActivitySecondsToCompleteKey);
 
-const deleteActivity = inject("deleteActivity");
+const deleteActivity = inject(deleteActivityKey);
 </script>
 
 <template>

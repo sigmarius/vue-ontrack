@@ -1,6 +1,8 @@
 <script setup>
 import { nextTick, inject, ref } from "vue";
 
+import { createActivityKey } from "@/keys"
+
 import BaseButton from "@/components/BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
 import { id } from "@/functions";
@@ -8,7 +10,7 @@ import { id } from "@/functions";
 // для реактивной переменной модицицируется поле value
 const name = ref("");
 
-const createActivity = inject("createActivity");
+const createActivity = inject(createActivityKey);
 
 // вариант через async
 async function submit() {

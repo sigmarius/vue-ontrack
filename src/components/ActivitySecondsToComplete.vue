@@ -3,6 +3,8 @@ import { computed, inject } from "vue";
 import { formatSeconds, getTotalActivitySeconds } from "@/functions";
 import { isActivityValid } from "@/validators";
 
+import { timelineItemsKey } from "@/keys"
+
 const props = defineProps({
   activity: {
     type: Object,
@@ -13,7 +15,7 @@ const props = defineProps({
 
 // с помощью inject('key') также можно получать свойства родительского компонента
 // по ключу key, указанному в родительском компоненте
-const timelineItems = inject('timelineItems');
+const timelineItems = inject(timelineItemsKey);
 
 const sign = computed(() => (secondsDiff.value >= 0 ? "+" : "-"));
 

@@ -17,6 +17,8 @@ import { currentPage, timelineRef } from "@/router";
 
 import { ref, computed, provide } from "vue";
 
+import * as keys from "@/keys";
+
 const activities = ref(generateActivities());
 
 const timelineItems = ref(generateTimelineItems(activities.value));
@@ -55,22 +57,22 @@ function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 }
 
 // функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
-provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
-provide("setTimelineItemActivity", setTimelineItemActivity);
-provide("setActivitySecondsToComplete", setActivitySecondsToComplete);
+provide(keys.updateTimelineItemActivitySecondsKey, updateTimelineItemActivitySeconds);
+provide(keys.setTimelineItemActivityKey, setTimelineItemActivity);
+provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete);
 
-provide("createActivity", createActivity);
-provide("deleteActivity", deleteActivity);
+provide(keys.createActivityKey, createActivity);
+provide(keys.deleteActivityKey, deleteActivity);
 
 // доступ к результату выполнения функции
-provide("periodSelectOptions", generatePeriodSelectOptions());
+provide(keys.periodSelectOptionsKey, generatePeriodSelectOptions());
 
 // также можно предоставлять доступ к свойствам родительского компонента
 // value -> если переменная является реактивной
-provide("timelineItems", timelineItems.value);
+provide(keys.timelineItemsKey, timelineItems.value);
 
 // также можно передавать и computed свойства, через value
-provide("activitySelectOptions", activitySelectOptions.value);
+provide(keys.activitySelectOptionsKey, activitySelectOptions.value);
 </script>
 
 <template>
