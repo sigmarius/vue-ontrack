@@ -46,10 +46,11 @@ export function getTotalActivitySeconds(activity) {
     )
 }
 
-export function scrollToHour(hour = null, isSmooth = true) {
-  // если первый параметр не указан, присваивание выполняется
-  hour ??= getCurrentHour();
+export function scrollToCurrentHour(isSmooth = true) {
+  scrollToHour(getCurrentHour(), isSmooth)
+}
 
+export function scrollToHour(hour, isSmooth = true) {
   // $el - получает корневой элемент vue-компонента
   const el =
     hour === MIDNIGHT_HOUR

@@ -3,7 +3,12 @@ import { watchPostEffect, nextTick } from "vue";
 import TimelineItem from "@/components/TimelineItem.vue";
 import { PAGE_TIMELINE } from "@/constants";
 import { currentPage } from "@/router";
-import { timelineItems, timelineItemRefs, scrollToHour } from "@/timeline-items";
+import {
+  timelineItems,
+  timelineItemRefs,
+  scrollToHour,
+  scrollToCurrentHour
+} from "@/timeline-items";
 
 // хук onMounted(() => {}) позволяет выполнить код после того, как vue-компонент будет полностью готов, и все его элементы будут отрендерены в DOM-дереве, выполняется только один раз
 
@@ -15,7 +20,7 @@ watchPostEffect(async () => {
     await nextTick();
 
     // получаем текущий час
-    scrollToHour(null, false);
+    scrollToCurrentHour(false);
   }
 });
 </script>
