@@ -10,6 +10,8 @@ import {
   MILLISECONDS_IN_SECOND,
 } from "@/constants";
 
+import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "@/icons";
+
 import { isTimelineItemValid } from "@/validators";
 import { formatSeconds, getCurrentHour } from "@/functions";
 
@@ -72,7 +74,7 @@ function reset() {
 <template>
   <div class="w-full flex gap-2">
     <BaseButton :type="BUTTON_TYPE_DANGER" :disabled="!seconds" @click="reset">
-      <BaseIcon name="ArrowPath" class="h-8" />
+      <BaseIcon :name="ICON_ARROW_PATH" class="h-8" />
     </BaseButton>
 
     <div
@@ -82,7 +84,7 @@ function reset() {
     </div>
 
     <BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
-      <BaseIcon name="Pause" class="h-8" />
+      <BaseIcon :name="ICON_PAUSE" class="h-8" />
     </BaseButton>
 
     <BaseButton
@@ -91,7 +93,7 @@ function reset() {
       :type="BUTTON_TYPE_SUCCESS"
       @click="start"
     >
-      <BaseIcon name="Play" class="h-8" />
+      <BaseIcon :name="ICON_PLAY" class="h-8" />
     </BaseButton>
   </div>
 </template>

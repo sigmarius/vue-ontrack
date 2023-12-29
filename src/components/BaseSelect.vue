@@ -10,6 +10,7 @@ import {
 } from "@/validators";
 
 import { BUTTON_TYPE_NEUTRAL } from "@/constants";
+import { ICON_XMARK } from "@/icons";
 import { normalizeSelectValue } from "@/functions";
 
 // defineProps(["options", "placeholder", "selected"]);
@@ -43,7 +44,7 @@ function select(value) {
 <template>
   <div class="flex gap-2">
     <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="select(null)">
-      <BaseIcon name="XMark" class="h-8" />
+      <BaseIcon :name="ICON_XMARK" class="h-8" />
     </BaseButton>
 
     <select

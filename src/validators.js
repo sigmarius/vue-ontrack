@@ -1,4 +1,5 @@
 import { NAV_ITEMS, HOURS_IN_DAY, MIDNIGHT_HOUR, BUTTON_TYPES } from '@/constants'
+import { ICONS } from "@/icons"
 
 function isString(value) {
   return typeof value === 'string'
@@ -80,4 +81,8 @@ export function isSelectValueValid(value) {
 
 export function isNavItemValid(navItem) {
   return NAV_ITEMS.includes(navItem)
+}
+
+export function isIconValid(icon) {
+  return Object.keys(ICONS).includes(icon)
 }
