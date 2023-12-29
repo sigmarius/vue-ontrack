@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 
-import { generateActivitySelectOptions, generateActivities } from '@/functions'
+import { generateActivitySelectOptions, generateActivities } from '@/functions';
 
 export const activities = ref(generateActivities())
 

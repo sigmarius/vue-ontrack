@@ -7,13 +7,12 @@ import TheProgress from "@/pages/TheProgress.vue";
 
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from "@/constants";
 import {
-  generateTimelineItems,
   generatePeriodSelectOptions,
 } from "@/functions";
 
 import { currentPage, timelineRef } from "@/router";
 
-import { ref, provide, readonly } from "vue";
+import { provide, readonly } from "vue";
 
 import * as keys from "@/keys";
 
@@ -25,15 +24,11 @@ import {
   setActivitySecondsToComplete,
 } from "@/activities";
 
-const timelineItems = ref(generateTimelineItems(activities.value));
-
-function setTimelineItemActivity(timelineItem, activityId) {
-  timelineItem.activityId = activityId;
-}
-
-function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
-  timelineItem.activitySeconds += activitySeconds;
-}
+import {
+  timelineItems,
+  setTimelineItemActivity,
+  updateTimelineItemActivitySeconds,
+} from "@/timeline-items";
 
 // функция provide(key, function) обеспечивает доступ по ключу key к определенной функции родительского компонента (function) всем дочерним компонентам, вместо того, чтобы отправлять множество кастомных событий наверх
 provide(
