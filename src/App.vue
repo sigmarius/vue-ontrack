@@ -15,7 +15,7 @@ import {
 
 import { currentPage, timelineRef } from "@/router";
 
-import { ref, computed, provide } from "vue";
+import { ref, computed, provide, readonly } from "vue";
 
 import * as keys from "@/keys";
 
@@ -65,14 +65,17 @@ provide(keys.createActivityKey, createActivity);
 provide(keys.deleteActivityKey, deleteActivity);
 
 // доступ к результату выполнения функции
-provide(keys.periodSelectOptionsKey, generatePeriodSelectOptions());
+// readonly => запрещает модификацию данных из дочернего компонента
+provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
 
 // также можно предоставлять доступ к свойствам родительского компонента
 // value -> если переменная является реактивной
-provide(keys.timelineItemsKey, timelineItems.value);
+// readonly => запрещает модификацию данных из дочернего компонента
+provide(keys.timelineItemsKey, readonly(timelineItems.value));
 
 // также можно передавать и computed свойства, через value
-provide(keys.activitySelectOptionsKey, activitySelectOptions.value);
+// readonly => запрещает модификацию данных из дочернего компонента
+provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions.value));
 </script>
 
 <template>
