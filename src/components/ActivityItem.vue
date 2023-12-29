@@ -10,7 +10,7 @@ import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS } from "@/constants";
 
 import ActivitySecondsToComplete from "@/components/ActivitySecondsToComplete.vue";
 
-import { setActivitySecondsToComplete, deleteActivity } from "@/activities";
+import { updateActivity, deleteActivity } from "@/activities";
 import { resetTimelineItemActivities } from "@/timeline-items";
 
 defineProps({
@@ -43,7 +43,7 @@ function deleteAndResetActivity(activity) {
         placeholder="hh:mm"
         :selected="activity.secondsToComplete || null"
         class="grow font-mono"
-        @select="setActivitySecondsToComplete(activity, $event)"
+        @select="updateActivity(activity, { secondsToComplete: $event || 0 })"
       />
 
       <ActivitySecondsToComplete
