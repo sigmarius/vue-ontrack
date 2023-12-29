@@ -7,38 +7,19 @@ import TheProgress from "@/pages/TheProgress.vue";
 
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from "@/constants";
 import {
-  normalizePageHash,
   generateTimelineItems,
   generateActivitySelectOptions,
   generateActivities,
   generatePeriodSelectOptions,
 } from "@/functions";
 
+import { currentPage, navigate, timelineRef } from "@/router";
+
 import { ref, computed, provide } from "vue";
-
-const currentPage = ref(normalizePageHash());
-
-function goToPage(page) {
-  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
-    console.log("timeline", timeline.value);
-
-    // доступ предоставлен в компоненте TheTimeline через макрос defineExpose()
-    timeline.value.scrollToHour();
-  }
-
-  if (page !== PAGE_TIMELINE) {
-    document.body.scrollIntoView();
-  }
-
-  // обновление значения реактивной переменной происходит через value
-  currentPage.value = page;
-}
 
 const activities = ref(generateActivities());
 
 const timelineItems = ref(generateTimelineItems(activities.value));
-
-const timeline = ref();
 
 // чтобы выполнить повторно функцию, зависящую от реактивных переменных
 // используется функция computed(() => {})
@@ -94,14 +75,14 @@ provide("activitySelectOptions", activitySelectOptions.value);
 
 <template>
   <!-- @go-to-timeline в html атрибуты пишутся в кебаб-кейс -->
-  <TheHeader @navigate="goToPage($event)" />
+  <TheHeader @navigate="navigate" />
 
   <main class="flex flex-col flex-grow">
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
       :current-page="currentPage"
-      ref="timeline"
+      ref="timelineRef"
     />
 
     <!-- в шаблоне ссылаться на свойство value для реактивных элементов не обязательно, vue сделает это автоматически -->
@@ -116,7 +97,7 @@ provide("activitySelectOptions", activitySelectOptions.value);
   <!-- :current-page передаем пропс в дочерний компонент в кебаб-кейс -->
   <!-- @navigate слушаем событие, переданное из дочернего компонента -->
   <!-- $event данные, переданные вторым аргументом из дочернего компонента -->
-  <TheNav :current-page="currentPage" @navigate="goToPage($event)" />
+  <TheNav :current-page="currentPage" @navigate="navigate" />
 </template>
 
 <style scoped></style>
