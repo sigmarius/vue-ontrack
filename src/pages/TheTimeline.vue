@@ -1,21 +1,10 @@
 <script setup>
 import { watchPostEffect, ref, nextTick } from "vue";
 import TimelineItem from "@/components/TimelineItem.vue";
-import { validateTimelineItems } from "@/validators";
-
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "@/constants";
-
 import { currentPage } from "@/router";
-
 import { getCurrentHour } from "@/functions";
-
-defineProps({
-  timelineItems: {
-    type: Array,
-    required: true,
-    validator: validateTimelineItems,
-  },
-});
+import { timelineItems } from "@/timeline-items";
 
 // макрос defineExpose() предоставляет доступ к локальным функциям дочернего компонента для компонента-родителя
 defineExpose({ scrollToHour });

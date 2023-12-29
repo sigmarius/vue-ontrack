@@ -17,7 +17,6 @@ import { provide, readonly } from "vue";
 import * as keys from "@/keys";
 
 import {
-  activities,
   activitySelectOptions,
   createActivity,
   deleteActivity,
@@ -25,7 +24,6 @@ import {
 } from "@/activities";
 
 import {
-  timelineItems,
   setTimelineItemActivity,
   updateTimelineItemActivitySeconds,
   resetTimelineItemActivities
@@ -49,12 +47,6 @@ provide(keys.deleteActivityKey, (activity) => {
 // readonly => запрещает модификацию данных из дочернего компонента
 provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
 
-// также можно предоставлять доступ к свойствам родительского компонента
-// value -> если переменная является реактивной
-// через provide всегда передается сама переменная, без value
-// readonly => запрещает модификацию данных из дочернего компонента
-provide(keys.timelineItemsKey, readonly(timelineItems));
-
 // также можно передавать и computed свойства, через value
 // readonly => запрещает модификацию данных из дочернего компонента
 // .value обеспечивает доступ к начальному состоянию переменной,
@@ -69,14 +61,11 @@ provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions));
   <main class="flex flex-col flex-grow">
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
-      :timeline-items="timelineItems"
       ref="timelineRef"
     />
 
-    <!-- в шаблоне ссылаться на свойство value для реактивных элементов не обязательно, vue сделает это автоматически -->
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
-      :activities="activities"
     />
 
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />

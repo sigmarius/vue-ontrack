@@ -49,12 +49,6 @@ export function formatSeconds(seconds) {
   return utc.substring(utc.indexOf(":") - 2, utc.indexOf(":") + 6);
 }
 
-export function getTotalActivitySeconds(activity, timelineItems) {
-  return timelineItems
-    .filter(timelineItem => timelineItem.activityId === activity.id)
-    .reduce((totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds), 0);
-}
-
 export function getCurrentHour() {
   return new Date().getHours();
 }
