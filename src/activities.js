@@ -20,6 +20,10 @@ function generateActivitySelectOptions(activities) {
 
 export const activities = ref(generateActivities())
 
+export const trackedActivities = computed(() =>
+  activities.value.filter(( { secondsToComplete }) => secondsToComplete)
+)
+
 // чтобы выполнить повторно функцию, зависящую от реактивных переменных
 // используется функция computed(() => {})
 export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
