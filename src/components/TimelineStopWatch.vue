@@ -33,6 +33,8 @@ const isRunning = ref(false);
 // кнопка включения секундомера доступна только для текущего часа
 const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();
 
+const temp = 120;
+
 // функция отслеживает изменение реактивной переменной
 // предпринимает действия при изменении ее состояния
 watch(
@@ -46,7 +48,7 @@ function start() {
   // isRunning хранит ссылку на таймер
   isRunning.value = setInterval(() => {
     updateTimelineItem(props.timelineItem, {
-      activitySeconds: props.timelineItem.activitySeconds + 1
+      activitySeconds: props.timelineItem.activitySeconds + temp
     });
 
     seconds.value++;
@@ -64,7 +66,7 @@ function reset() {
 
   updateTimelineItem(
     props.timelineItem,
-    { activitySeconds: props.timelineItem.activitySeconds - seconds.value }
+    { activitySeconds: props.timelineItem.activitySeconds - seconds.value * temp }
   );
 
   seconds.value = 0;
