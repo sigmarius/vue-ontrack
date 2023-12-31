@@ -74,7 +74,7 @@ function reset() {
 <template>
   <div class="w-full flex gap-2">
     <BaseButton :type="BUTTON_TYPE_DANGER" :disabled="!seconds" @click="reset">
-      <BaseIcon :name="ICON_ARROW_PATH" class="h-8" />
+      <BaseIcon :name="ICON_ARROW_PATH" />
     </BaseButton>
 
     <div
@@ -84,7 +84,7 @@ function reset() {
     </div>
 
     <BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
-      <BaseIcon :name="ICON_PAUSE" class="h-8" />
+      <BaseIcon :name="ICON_PAUSE" />
     </BaseButton>
 
     <BaseButton
@@ -93,7 +93,7 @@ function reset() {
       :type="BUTTON_TYPE_SUCCESS"
       @click="start"
     >
-      <BaseIcon :name="ICON_PLAY" class="h-8" />
+      <BaseIcon :name="ICON_PLAY" />
     </BaseButton>
   </div>
 </template>

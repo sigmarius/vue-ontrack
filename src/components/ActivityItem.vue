@@ -32,7 +32,7 @@ function deleteAndResetActivity(activity) {
   <li class="p-4 flex flex-col gap-2">
     <div class="flex items-center gap-2">
       <BaseButton :type="BUTTON_TYPE_DANGER" @click="deleteAndResetActivity(activity)">
-        <BaseIcon :name="ICON_TRASH" class="h-8" />
+        <BaseIcon :name="ICON_TRASH" />
       </BaseButton>
       <span class="text-xl truncate">{{ activity.name }}</span>
     </div>
