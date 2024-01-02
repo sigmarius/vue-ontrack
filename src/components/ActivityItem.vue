@@ -8,7 +8,7 @@ import { isActivityValid } from "@/validators";
 import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS } from "@/constants";
 import { ICON_TRASH } from "@/icons";
 
-import ActivitySecondsToComplete from "@/components/ActivitySecondsToComplete.vue";
+import RemainingActivitySeconds from "@/components/RemainingActivitySeconds.vue";
 
 import { updateActivity, deleteActivity } from "@/activities";
 import { timelineItems, resetTimelineItemActivities } from "@/timeline-items";
@@ -46,7 +46,7 @@ function deleteAndResetActivity(activity) {
         @select="updateActivity(activity, { secondsToComplete: $event || 0 })"
       />
 
-      <ActivitySecondsToComplete
+      <RemainingActivitySeconds
         v-if="activity.secondsToComplete"
         :activity="activity"
       />
