@@ -29,15 +29,17 @@ const props = defineProps({
   },
 });
 
-const classes =
-  `${typeClasses[props.type]} p-3 rounded disabled:cursor-not-allowed disabled:opacity-50`;
-;
+const classes = [
+  'p-3 rounded disabled:cursor-not-allowed disabled:opacity-50',
+  typeClasses[props.type]
+];
+
 </script>
 
 <template>
   <button
     :class="classes"
   >
-    <slot></slot>
+    <slot />
   </button>
 </template>
