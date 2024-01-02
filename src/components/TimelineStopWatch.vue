@@ -1,5 +1,4 @@
 <script setup>
-import { ref, watch } from "vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -7,15 +6,13 @@ import {
   BUTTON_TYPE_DANGER,
   BUTTON_TYPE_WARNING,
   BUTTON_TYPE_SUCCESS,
-  MILLISECONDS_IN_SECOND,
 } from "@/constants";
 
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "@/icons";
 
 import { isTimelineItemValid } from "@/validators";
 import { formatSeconds, getCurrentHour } from "@/functions";
-
-import { updateTimelineItem } from "@/timeline-items";
+import { useStopwatch } from "@/composables/stopwatch"
 
 const props = defineProps({
   timelineItem: {
@@ -25,52 +22,7 @@ const props = defineProps({
   },
 });
 
-const seconds = ref(props.timelineItem.activitySeconds);
-
-// по умолчанию секундомер остановлен
-const isRunning = ref(false);
-
-// кнопка включения секундомера доступна только для текущего часа
-const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();
-
-const temp = 120;
-
-// функция отслеживает изменение реактивной переменной
-// предпринимает действия при изменении ее состояния
-watch(
-  () => props.timelineItem.activityId,
-  () => {
-    updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value })
-  }
-);
-
-function start() {
-  // isRunning хранит ссылку на таймер
-  isRunning.value = setInterval(() => {
-    updateTimelineItem(props.timelineItem, {
-      activitySeconds: props.timelineItem.activitySeconds + temp
-    });
-
-    seconds.value += temp;
-  }, MILLISECONDS_IN_SECOND);
-}
-
-function stop() {
-  clearInterval(isRunning.value);
-
-  isRunning.value = false;
-}
-
-function reset() {
-  stop();
-
-  updateTimelineItem(
-    props.timelineItem,
-    { activitySeconds: props.timelineItem.activitySeconds - seconds.value }
-  );
-
-  seconds.value = 0;
-}
+const { seconds, isRunning, start, stop, reset } = useStopwatch(props.timelineItem);
 </script>
 
 <template>
@@ -91,7 +43,7 @@ function reset() {
 
     <BaseButton
       v-else
-      :disabled="isStartButtonDisabled"
+      :disabled="timelineItem.hour !== getCurrentHour()"
       :type="BUTTON_TYPE_SUCCESS"
       @click="start"
     >
