@@ -4,7 +4,6 @@ import TimelineItem from "@/components/TimelineItem.vue";
 import {
   timelineItems,
   timelineItemRefs,
-  scrollToHour,
   scrollToCurrentHour
 } from "@/timeline-items";
 
@@ -31,7 +30,6 @@ onActivated(scrollToCurrentHour);
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
         :timeline-items="timelineItems"
-        @scroll-to-hour="scrollToHour(timelineItem.hour)"
         ref="timelineItemRefs"
       />
     </ul>

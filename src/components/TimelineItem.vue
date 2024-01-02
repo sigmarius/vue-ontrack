@@ -6,7 +6,7 @@ import BaseSelect from "@/components/BaseSelect.vue";
 import TimelineHour from "@/components/TimelineHour.vue";
 import TimelineStopWatch from "@/components/TimelineStopWatch.vue";
 
-import { isTimelineItemValid, isUndefined } from "@/validators";
+import { isTimelineItemValid } from "@/validators";
 
 defineProps({
   timelineItem: {
@@ -15,17 +15,12 @@ defineProps({
     validator: isTimelineItemValid,
   },
 });
-
-const emit = defineEmits({
-  scrollToHour: isUndefined,
-});
 </script>
 
 <template>
   <li class="relative px-4 py-10 flex flex-col gap-2 border-t border-gray-200">
     <TimelineHour
       :hour="timelineItem.hour"
-      @click.prevent="emit('scrollToHour')"
     />
 
     <BaseSelect

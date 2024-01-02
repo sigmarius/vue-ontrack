@@ -28,7 +28,7 @@ const colorClasses = computed(() =>
 
 const classes = computed(
   () =>
-    `px-2 flex items-center font-mono font-bold text-lg text-purple-600 rounded bg-purple-100 ${colorClasses.value}`
+    `px-2 flex items-center font-mono font-bold text-lg rounded ${colorClasses.value}`
 );
 
 const seconds = computed(
