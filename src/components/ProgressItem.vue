@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { getProgressColorClass, formatSeconds } from "@/functions";
 import { calculateActivityCompletionPercentage } from "@/activities"
-import { calculateTrackedActivitySeconds } from "@/timeline-items";
+import { timelineItems, calculateTrackedActivitySeconds } from "@/timeline-items";
 import { isActivityValid } from "@/validators";
 
 const props = defineProps({
@@ -13,9 +13,15 @@ const props = defineProps({
   }
 });
 
-const percentage = computed(() => calculateActivityCompletionPercentage(
-  props.activity, calculateTrackedActivitySeconds(props.activity)
+const percentage = computed(() =>
+  calculateActivityCompletionPercentage(
+    props.activity,
+    trackedActivitySeconds.value
   ));
+
+const trackedActivitySeconds = computed(() =>
+  calculateTrackedActivitySeconds(timelineItems.value, props.activity)
+);
 </script>
 
 <template>
@@ -31,7 +37,7 @@ const percentage = computed(() => calculateActivityCompletionPercentage(
     <div class="flex justify-between font-mono text-sm">
       <span>{{ percentage }}%</span>
       <span>
-        {{ formatSeconds(calculateTrackedActivitySeconds(activity)) }} /
+        {{ formatSeconds(trackedActivitySeconds) }} /
         {{ formatSeconds(activity.secondsToComplete) }}
       </span>
     </div>

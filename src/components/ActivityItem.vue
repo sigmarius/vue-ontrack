@@ -11,7 +11,7 @@ import { ICON_TRASH } from "@/icons";
 import ActivitySecondsToComplete from "@/components/ActivitySecondsToComplete.vue";
 
 import { updateActivity, deleteActivity } from "@/activities";
-import { resetTimelineItemActivities } from "@/timeline-items";
+import { timelineItems, resetTimelineItemActivities } from "@/timeline-items";
 
 defineProps({
   activity: {
@@ -23,7 +23,7 @@ defineProps({
 });
 
 function deleteAndResetActivity(activity) {
-  resetTimelineItemActivities(activity);
+  resetTimelineItemActivities(timelineItems.value, activity);
   deleteActivity(activity);
 };
 </script>
