@@ -1,5 +1,4 @@
 import { ref } from 'vue';
-import { activities } from '@/activities';
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants';
 import { getCurrentHour } from '@/functions';
 
