@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants';
 import { getCurrentHour } from '@/functions';
+// import { activities } from '@/activities';
 
 function generateTimelineItems() {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
