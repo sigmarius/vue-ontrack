@@ -1,4 +1,5 @@
 <script setup>
+import { watch } from 'vue'
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -12,6 +13,7 @@ import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "@/icons";
 
 import { isTimelineItemValid } from "@/validators";
 import { formatSeconds, getCurrentHour } from "@/functions";
+import { updateTimelineItem } from '@/timeline-items'
 import { useStopwatch } from "@/composables/stopwatch"
 
 const props = defineProps({
@@ -22,7 +24,23 @@ const props = defineProps({
   },
 });
 
-const { seconds, isRunning, start, stop, reset } = useStopwatch(props.timelineItem);
+const { seconds, isRunning, start, stop, reset } = useStopwatch(
+  props.timelineItem.activitySeconds,
+  updateTimelineItemActivitySeconds
+);
+
+// функция отслеживает изменение реактивной переменной
+// предпринимает действия при изменении ее состояния
+watch(
+  () => props.timelineItem.activityId,
+  updateTimelineItemActivitySeconds
+)
+
+function updateTimelineItemActivitySeconds() {
+  updateTimelineItem(props.timelineItem, {
+        activitySeconds: seconds.value
+    })
+}
 </script>
 
 <template>
