@@ -1,5 +1,5 @@
 <script setup>
-import { watch } from 'vue'
+import { watchEffect } from "vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -13,8 +13,8 @@ import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "@/icons";
 
 import { isTimelineItemValid } from "@/validators";
 import { formatSeconds, getCurrentHour } from "@/functions";
-import { updateTimelineItem } from '@/timeline-items'
-import { useStopwatch } from "@/composables/stopwatch"
+import { updateTimelineItem } from "@/timeline-items";
+import { useStopwatch } from "@/composables/stopwatch";
 
 const props = defineProps({
   timelineItem: {
@@ -25,34 +25,26 @@ const props = defineProps({
 });
 
 const { seconds, isRunning, start, stop, reset } = useStopwatch(
-  props.timelineItem.activitySeconds,
-  updateTimelineItemActivitySeconds
+  props.timelineItem.activitySeconds
 );
 
-// функция отслеживает изменение реактивной переменной
-// предпринимает действия при изменении ее состояния
-watch(
-  () => props.timelineItem.activityId,
-  updateTimelineItemActivitySeconds
-)
-
-function updateTimelineItemActivitySeconds() {
+watchEffect(() =>
   updateTimelineItem(props.timelineItem, {
-        activitySeconds: seconds.value
-    })
-}
+    activitySeconds: seconds.value,
+  })
+);
 </script>
 
 <template>
   <div class="w-full flex gap-2">
-    <BaseButton :type="BUTTON_TYPE_DANGER" :disabled="!seconds" @click="reset">
+    <BaseButton :type="BUTTON_TYPE_DANGER" :disabled="!timelineItem.activitySeconds" @click="reset">
       <BaseIcon :name="ICON_ARROW_PATH" />
     </BaseButton>
 
     <div
       class="px-2 flex grow items-center font-mono text-3xl rounded bg-gray-100"
     >
-      {{ formatSeconds(seconds) }}
+      {{ formatSeconds(timelineItem.activitySeconds) }}
     </div>
 
     <BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
