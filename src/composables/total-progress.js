@@ -5,19 +5,17 @@ import { timelineItems, calculateTrackedActivitySeconds } from '@/timeline-items
 
 export function useTotalProgress() {
   const totalTrackedSeconds = computed(() => {
-    return trackedActivities.value.reduce((total, activity) => {
-      let trackedSeconds = calculateTrackedActivitySeconds(timelineItems.value, activity)
+    return trackedActivities.value
+      .map((activity) =>
+        Math.min(
+          calculateTrackedActivitySeconds(timelineItems.value, activity),
+          activity.secondsToComplete
+        )
+      )
+      .reduce((total, seconds) => total + seconds, 0)
+  })
 
-      trackedSeconds =
-        trackedSeconds < activity.secondsToComplete ? trackedSeconds : activity.secondsToComplete
-
-      return total + trackedSeconds
-    }, 0)
-  });
-
-  const percentage = computed(() =>
-    calculateCompletionPercentage(totalTrackedSeconds.value)
-  )
+  const percentage = computed(() => calculateCompletionPercentage(totalTrackedSeconds.value))
 
   const colorClass = computed(() => getProgressColorClass(percentage.value))
 
