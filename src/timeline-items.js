@@ -15,8 +15,8 @@ function generateTimelineItems() {
   }))
 }
 
-function hasActivity(timelineItem, activity) {
-  return timelineItem.activityId === activity.id;
+function filterTimelineItemsByActivity( { id }) {
+  return timelineItems.value.filter(({ activityId }) => activityId === id)
 }
 
 export const timelineItems = ref(generateTimelineItems())
@@ -28,20 +28,18 @@ export function updateTimelineItem(timelineItem, fields) {
 }
 
 export function resetTimelineItemActivities(activity) {
-  timelineItems.value
-    .filter((timelineItem) => hasActivity(timelineItem, activity))
+    filterTimelineItemsByActivity(activity)
     .forEach((timelineItem) => updateTimelineItem(timelineItem, {
       activityId: null,
       activitySeconds: 0
     }))
 }
 
-export function getTotalActivitySeconds(activity) {
-  return timelineItems.value
-    .filter((timelineItem) => hasActivity(timelineItem, activity))
+export function calculateTrackedActivitySeconds(activity) {
+  return filterTimelineItemsByActivity(activity)
+    .map(({ activitySeconds }) => activitySeconds)
     .reduce(
-      (totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds),
-      0
+      (total, seconds) => Math.round(total + seconds), 0
     )
 }
 
