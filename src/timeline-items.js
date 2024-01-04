@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants';
-import { getCurrentHour } from '@/functions';
+import { now } from "@/time"
 // import { activities } from '@/activities';
 
 function generateTimelineItems() {
@@ -32,7 +32,7 @@ export function resetTimelineItemActivities(timelineItems, activity) {
     return filterTimelineItemsByActivity(timelineItems, activity)
     .forEach((timelineItem) => updateTimelineItem(timelineItem, {
       activityId: null,
-      activitySeconds: timelineItem.hour === getCurrentHour
+      activitySeconds: timelineItem.hour === now.value.getHours()
         ? timelineItem.activitySeconds
         : 0
     }))
@@ -47,7 +47,7 @@ export function calculateTrackedActivitySeconds(timelineItems, activity) {
 }
 
 export function scrollToCurrentHour(isSmooth = false) {
-  scrollToHour(getCurrentHour(), isSmooth)
+  scrollToHour(now.value.getHours(), isSmooth)
 }
 
 export function scrollToHour(hour, isSmooth = true) {

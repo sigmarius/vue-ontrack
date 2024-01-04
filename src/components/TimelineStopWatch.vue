@@ -12,9 +12,10 @@ import {
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "@/icons";
 
 import { isTimelineItemValid } from "@/validators";
-import { formatSeconds, getCurrentHour } from "@/functions";
+import { formatSeconds } from "@/functions";
 import { updateTimelineItem } from "@/timeline-items";
 import { useStopwatch } from "@/composables/stopwatch";
+import { now } from "@/time"
 
 const props = defineProps({
   timelineItem: {
@@ -27,6 +28,15 @@ const props = defineProps({
 const { seconds, isRunning, start, stop, reset } = useStopwatch(
   props.timelineItem.activitySeconds
 );
+
+watchEffect(() => {
+  if (
+    props.timelineItem.hour !== now.value.getHours()
+    && isRunning.value
+    ) {
+      stop();
+    }
+})
 
 watchEffect(() =>
   updateTimelineItem(props.timelineItem, {
@@ -53,7 +63,7 @@ watchEffect(() =>
 
     <BaseButton
       v-else
-      :disabled="timelineItem.hour !== getCurrentHour()"
+      :disabled="timelineItem.hour !== now.getHours()"
       :type="BUTTON_TYPE_SUCCESS"
       @click="start"
     >
