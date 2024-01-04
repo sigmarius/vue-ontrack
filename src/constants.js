@@ -43,6 +43,7 @@ export const SECONDS_IN_MINUTE = 60
 export const MINUTES_IN_HOUR = 60
 
 export const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * MINUTES_IN_HOUR
+export const SECONDS_IN_DAY = SECONDS_IN_HOUR * HOURS_IN_DAY
 
 export const LOW_PERCENT = 33;
 export const MEDIUM_PERCENT = 66;
