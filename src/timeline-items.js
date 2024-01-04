@@ -1,6 +1,6 @@
-import { ref } from 'vue';
-import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants';
-import { now } from "@/time"
+import { ref } from 'vue'
+import { HOURS_IN_DAY, MIDNIGHT_HOUR, MILLISECONDS_IN_SECOND } from '@/constants'
+import { now } from '@/time'
 // import { activities } from '@/activities';
 
 function generateTimelineItems() {
@@ -17,34 +17,51 @@ function generateTimelineItems() {
   }))
 }
 
-function filterTimelineItemsByActivity( timelineItems, { id }) {
+function filterTimelineItemsByActivity(timelineItems, { id }) {
   return timelineItems.filter(({ activityId }) => activityId === id)
 }
 
+// глобальный таймер
+let timelineItemTimer = null
+
 export const timelineItems = ref(generateTimelineItems())
 
-export const timelineItemRefs = ref([]);
+export const timelineItemRefs = ref([])
+
+export function findActiveTimelineItem() {
+  return timelineItems.value.find(({ isActive }) => isActive)
+}
+
+// запуск глобального таймера timelineItemTimer
+export function startTimelineItemTimer(activeTimelineItem) {
+  timelineItemTimer = setInterval(() => {
+    updateTimelineItem(activeTimelineItem, {
+      activitySeconds: activeTimelineItem.activitySeconds + 1
+    })
+  }, MILLISECONDS_IN_SECOND)
+}
+
+export function stopTimelineItemTimer() {
+  clearInterval(timelineItemTimer)
+}
 
 export function updateTimelineItem(timelineItem, fields) {
   return Object.assign(timelineItem, fields)
 }
 
 export function resetTimelineItemActivities(timelineItems, activity) {
-    return filterTimelineItemsByActivity(timelineItems, activity)
-    .forEach((timelineItem) => updateTimelineItem(timelineItem, {
+  return filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem) =>
+    updateTimelineItem(timelineItem, {
       activityId: null,
-      activitySeconds: timelineItem.hour === now.value.getHours()
-        ? timelineItem.activitySeconds
-        : 0
-    }))
+      activitySeconds: timelineItem.hour === now.value.getHours() ? timelineItem.activitySeconds : 0
+    })
+  )
 }
 
 export function calculateTrackedActivitySeconds(timelineItems, activity) {
   return filterTimelineItemsByActivity(timelineItems, activity)
     .map(({ activitySeconds }) => activitySeconds)
-    .reduce(
-      (total, seconds) => Math.round(total + seconds), 0
-    )
+    .reduce((total, seconds) => Math.round(total + seconds), 0)
 }
 
 export function scrollToCurrentHour(isSmooth = false) {
@@ -53,12 +70,9 @@ export function scrollToCurrentHour(isSmooth = false) {
 
 export function scrollToHour(hour, isSmooth = true) {
   // $el - получает корневой элемент vue-компонента
-  const el =
-    hour === MIDNIGHT_HOUR
-      ? document.body
-      : timelineItemRefs.value[hour - 1].$el;
+  const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemRefs.value[hour - 1].$el
 
   el.scrollIntoView({
-    behavior: isSmooth ? "smooth" : "instant",
-  });
+    behavior: isSmooth ? 'smooth' : 'instant'
+  })
 }

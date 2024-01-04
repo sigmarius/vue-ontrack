@@ -5,7 +5,8 @@ import TheTimelineIndicator from "@/components/TheTimelineIndicator.vue";
 import {
   timelineItems,
   timelineItemRefs,
-  scrollToCurrentHour
+  scrollToCurrentHour,
+  stopTimelineItemTimer
 } from "@/timeline-items";
 import { startTimer, stopTimer } from "@/time";
 
@@ -18,6 +19,9 @@ import { startTimer, stopTimer } from "@/time";
 // onActivated(() => {
 //   scrollToCurrentHour(false);
 // });
+
+// останавливаем глобальный секундомер в самый первый раз при создании приложения
+stopTimelineItemTimer();
 
 onActivated(() => {
   scrollToCurrentHour();
