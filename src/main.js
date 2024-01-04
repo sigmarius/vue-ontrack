@@ -12,11 +12,21 @@ function saveState() {
     })
 }
 
+function loadState() {
+    const state = storage.load();
+
+    timelineItems.value = state.timelineItems;
+
+    activities.value = state.activities;
+}
+
+// загружаем начальное состояние приложения
+loadState();
+
 document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') {
-        console.log('hidden')
-        saveState()
-    }
+    document.visibilityState === 'visible'
+        ? loadState()
+        : saveState()
 })
 
 createApp(App).mount('#app')
