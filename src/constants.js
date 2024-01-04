@@ -1,6 +1,8 @@
 import { generatePeriodSelectOptions } from "@/functions";
 import { ICON_CLOCK, ICON_LIST_BULLET, ICON_CHART_BAR} from "@/icons"
 
+export const APP_NAME = 'ontrack'
+
 export const BUTTON_TYPE_NEUTRAL = 'neutral'
 export const BUTTON_TYPE_DANGER = 'danger'
 export const BUTTON_TYPE_PRIMARY = 'primary'

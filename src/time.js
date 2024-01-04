@@ -16,7 +16,11 @@ const secondsSinceMidnight = computed(
 
 let timer = null
 
-export const now = ref(new Date());
+// временно, для тестирования
+const date = new Date();
+date.setHours(0, 0);
+
+export const now = ref(date);
 
 export const secondsSinceMidnightInPercentage = computed(
   () => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY
@@ -24,7 +28,7 @@ export const secondsSinceMidnightInPercentage = computed(
 
 
 export function startTimer() {
-    now.value = new Date()
+    now.value = date
 
     timer = setInterval(
         () => {
