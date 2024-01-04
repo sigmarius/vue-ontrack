@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect, onActivated, onDeactivated } from "vue";
 import {
   HUNDRED_PERCENT,
   SECONDS_IN_MINUTE,
@@ -12,10 +12,19 @@ const secondsSinceMidnight = ref(calculateSecondsSinceMidnight())
 
 const indicatorRef = ref();
 
-setInterval(
-    () => secondsSinceMidnight.value += 5 * 60,
-    MILLISECONDS_IN_SECOND
-)
+let timer = null;
+// индикатор запускается только при переключении на страницу
+onActivated(() => {
+    secondsSinceMidnight.value = calculateSecondsSinceMidnight();
+
+    timer = setInterval(
+        () => secondsSinceMidnight.value += 5 * 60,
+        MILLISECONDS_IN_SECOND
+    )
+})
+
+// при переходе на другую страницу останавливаем индикатор
+onDeactivated(() => clearInterval(timer));
 
 const topOffset = computed(
     () => (
