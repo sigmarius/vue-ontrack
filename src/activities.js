@@ -4,7 +4,7 @@ import { id } from '@/functions';
 
 function generateActivities() {
   return ['Coding', 'Training', 'Reading']
-  .map((name, idx) => ({
+  .map((name) => ({
       id: id(),
       name,
       secondsToComplete: 15 * 60 //idx * SECONDS_IN_HOUR

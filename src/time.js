@@ -6,36 +6,47 @@ import {
   SECONDS_IN_MINUTE
 } from '@/constants'
 
-
 // дата, соответствующая прошедшей полночи
 const midnight = computed(() => new Date(now.value).setHours(0, 0, 0, 0))
 
-const secondsSinceMidnight = computed(
-    () => (now.value - midnight.value) / MILLISECONDS_IN_SECOND
-)
+const secondsSinceMidnight = computed(() => (now.value - midnight.value) / MILLISECONDS_IN_SECOND)
 
 let timer = null
 
-// временно, для тестирования
-const date = new Date();
-date.setHours(0, 0);
-
-export const now = ref(date);
+export const now = ref(today())
 
 export const secondsSinceMidnightInPercentage = computed(
   () => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY
 )
 
-
 export function startTimer() {
-    now.value = date
+  now.value = today()
 
-    timer = setInterval(
-        () => {
-            now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND)
-        }, MILLISECONDS_IN_SECOND)
+  timer = setInterval(() => {
+    now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND)
+  }, MILLISECONDS_IN_SECOND)
 }
 
 export function stopTimer() {
-    clearInterval(timer)
+  clearInterval(timer)
+}
+
+export function today() {
+    const today = new Date()
+
+    // временно, для тестирования
+    today.setHours(0, 0)
+
+    return today
+  }
+
+  export function tomorrow() {
+    const tomorrow = today()
+    tomorrow.setHours(tomorrow.getDate() + 1)
+
+    return tomorrow
+  }
+
+export function isToday(date) {
+    return date.toDateString() === today().toDateString()
 }

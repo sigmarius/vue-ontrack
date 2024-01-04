@@ -7,7 +7,7 @@ export function useStopwatch(initialSeconds) {
   // по умолчанию секундомер остановлен
   const isRunning = ref(false)
 
-  const temp = 120;
+  const temp = 1;
 
   function start() {
     // isRunning хранит ссылку на таймер
