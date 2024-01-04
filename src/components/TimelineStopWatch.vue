@@ -1,5 +1,5 @@
 <script setup>
-import { watchEffect } from "vue";
+import { watch, watchEffect, onMounted } from "vue";
 import BaseIcon from "@/components/BaseIcon.vue";
 import BaseButton from "@/components/BaseButton.vue";
 
@@ -29,6 +29,12 @@ const { seconds, isRunning, start, stop, reset } = useStopwatch(
   props.timelineItem.activitySeconds
 );
 
+onMounted(() => {
+  if (props.timelineItem.isActive) {
+    start()
+  }
+})
+
 watchEffect(() => {
   if (
     props.timelineItem.hour !== now.value.getHours()
@@ -43,6 +49,16 @@ watchEffect(() =>
     activitySeconds: seconds.value,
   })
 );
+
+// отслеживаем isRunning, функция срабатывает каждый раз при изменении состояния секундомера
+watch(
+  isRunning,
+  () =>
+    updateTimelineItem(props.timelineItem, {
+    isActive: Boolean(isRunning.value)
+  })
+
+)
 </script>
 
 <template>
