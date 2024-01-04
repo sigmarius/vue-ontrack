@@ -1,9 +1,10 @@
 <script setup>
 import { computed } from "vue";
 import BaseIcon from "@/components/BaseIcon.vue";
-
 import { currentPage, navigate } from "@/router";
 import { isNavItemValid } from "@/validators";
+import { PAGE_TIMELINE } from "@/constants";
+import { scrollToCurrentHour } from "@/timeline-items";
 
 // определяем константу props если ссылаемся на пропсы в теге <script>
 const props = defineProps({
@@ -16,8 +17,14 @@ const props = defineProps({
 
 const classes = computed(() => [
   "p-2 flex flex-col items-center text-xs capitalize",
-  { "bg-gray-200 pointer-events-none": props.navItem.page === currentPage.value },
+  { "bg-gray-200": props.navItem.page === currentPage.value },
 ]);
+
+function handleClick() {
+  currentPage.value === PAGE_TIMELINE && props.navItem.page === PAGE_TIMELINE
+    ? scrollToCurrentHour(true)
+    : navigate(props.navItem.page)
+}
 </script>
 
 <template>
@@ -25,7 +32,7 @@ const classes = computed(() => [
     <a
       :href="`#${navItem.page}`"
       :class="classes"
-      @click="navigate(navItem.page)"
+      @click="handleClick"
     >
         <BaseIcon :name="navItem.icon" class="h-6 w-6" />
         {{ navItem.page }}
