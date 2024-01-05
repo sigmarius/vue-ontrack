@@ -32,7 +32,7 @@ export function syncState(shouldLoad = true) {
 
   if (activeTimelineItem.value) {
     shouldLoad
-      ? startTimelineItemTimer(activeTimelineItem.value)
-      : stopTimelineItemTimer(activeTimelineItem.value)
+      ? startTimelineItemTimer()
+      : stopTimelineItemTimer()
   }
 }

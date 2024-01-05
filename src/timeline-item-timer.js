@@ -4,10 +4,19 @@ import { activeTimelineItem, updateTimelineItem } from '@/timeline-items'
 import { now } from "@/time"
 
 // глобальный таймер
-export const timelineItemTimer = ref(false)
+const timelineItemTimer = ref(false)
+
+// отслеживаем когда поменяется час, если был активен какой-либо секундомер, его нужно остановить автоматически
+watchEffect(() => {
+  if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
+    stopTimelineItemTimer()
+  }
+})
 
 // запуск глобального таймера timelineItemTimer
 export function startTimelineItemTimer(timelineItem) {
+  timelineItem = timelineItem ?? activeTimelineItem.value
+
   updateTimelineItem(timelineItem, {
     isActive: true
   })
@@ -19,8 +28,8 @@ export function startTimelineItemTimer(timelineItem) {
   }, MILLISECONDS_IN_SECOND)
 }
 
-export function stopTimelineItemTimer(timelineItem) {
-  updateTimelineItem(timelineItem, {
+export function stopTimelineItemTimer() {
+  updateTimelineItem(activeTimelineItem.value, {
     isActive: false
   })
 
@@ -34,12 +43,7 @@ export function resetTimelineItemTimer(timelineItem) {
     activitySeconds: 0
   })
 
-  stopTimelineItemTimer(timelineItem)
-}
-
-// отслеживаем когда поменяется час, если был активен какой-либо секундомер, его нужно остановить автоматически
-watchEffect(() => {
-  if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
-    stopTimelineItemTimer(activeTimelineItem.value)
+  if (activeTimelineItem.value) {
+    stopTimelineItemTimer()
   }
-})
+}

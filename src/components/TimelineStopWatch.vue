@@ -14,11 +14,11 @@ import { isTimelineItemValid } from "@/validators";
 import { formatSeconds } from "@/functions";
 import { now } from "@/time"
 import {
-  timelineItemTimer,
   startTimelineItemTimer,
   stopTimelineItemTimer,
   resetTimelineItemTimer
 } from "@/timeline-item-timer"
+import { activeTimelineItem } from "@/timeline-items"
 
 defineProps({
   timelineItem: {
@@ -46,9 +46,9 @@ defineProps({
     </div>
 
     <BaseButton
-      v-if="timelineItemTimer && timelineItem.hour === now.getHours()"
+      v-if="timelineItem === activeTimelineItem"
       :type="BUTTON_TYPE_WARNING"
-      @click="$event => stopTimelineItemTimer(timelineItem)"
+      @click="stopTimelineItemTimer"
     >
       <BaseIcon :name="ICON_PAUSE" />
     </BaseButton>
