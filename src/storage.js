@@ -2,7 +2,7 @@ import { APP_NAME } from '@/constants'
 import { today, isToday, endOfHour, toSeconds } from '@/time'
 import { activeTimelineItem, timelineItems } from '@/timeline-items'
 import { activities } from '@/activities'
-import { startTimelineItemTimer, stopTimelineItemTimer } from '@/timeline-item-timer'
+import { startTimelineItemTimer, stopTimelineItemTimer, resetTimelineItems } from '@/timeline-item-timer'
 
 function syncIdleSeconds(timelineItems, lastActiveAt) {
     // модифицируем массив timelineItems
@@ -42,10 +42,14 @@ export function loadState() {
 
   const lastActiveAt = new Date(state.lastActiveAt)
 
-  // если приложение открыто в текущий день
-  timelineItems.value = isToday(lastActiveAt)
-    ? syncIdleSeconds(state.timelineItems, lastActiveAt)
-    : timelineItems.value
+  timelineItems.value = state.timelineItems ?? timelineItems.value
+
+  if (activeTimelineItem.value && isToday(lastActiveAt)) {
+    // если приложение открыто в текущий день
+    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt)
+  } else if (state.timelineItems && !isToday(lastActiveAt)) {
+    timelineItems.value = resetTimelineItems(state.timelineItems)
+  }
 }
 
 export function syncState(shouldLoad = true) {

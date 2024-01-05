@@ -37,6 +37,15 @@ export function resetTimelineItemTimer(timelineItem) {
   stopTimelineItemTimer(timelineItem)
 }
 
+// сбрасывает секунды, но сохраняет активности
+export function resetTimelineItems(timelineItems) {
+    return timelineItems.map(timelineItem => ({
+        ...timelineItem,
+        activitySeconds: 0,
+        isActive: false
+    }))
+}
+
 // отслеживаем когда поменяется час, если был активен какой-либо секундомер, его нужно остановить автоматически
 watchEffect(() => {
   if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
