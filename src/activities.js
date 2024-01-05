@@ -24,6 +24,11 @@ export const trackedActivities = computed(() =>
 // используется функция computed(() => {})
 export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
+export function initializeActivities(state) {
+    // если данных в хранилище нет, присваиваем дефолтные значения
+    activities.value = state.activities || []
+}
+
 export function createActivity(activity) {
   activities.value.push(activity)
 }
