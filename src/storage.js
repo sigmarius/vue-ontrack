@@ -1,5 +1,5 @@
-import { APP_NAME, MILLISECONDS_IN_SECOND, SECONDS_IN_HOUR } from '@/constants'
-import { today, isToday } from '@/time'
+import { APP_NAME } from '@/constants'
+import { today, isToday, endOfHour, toSeconds } from '@/time'
 import { timelineItems } from '@/timeline-items'
 import { activities } from '@/activities'
 
@@ -14,28 +14,10 @@ function syncIdleSeconds(timelineItems, lastActiveAt) {
     return timelineItems
 }
 
-// вычисляет окончание часа, при котором мы начали замерять время для активности
-function getEndOfIdleHour(lastActiveAt) {
-  const endOfIdleHour = new Date(lastActiveAt);
-
-  // добавляем 1 час к дате последнего закрытия приложения
-  endOfIdleHour.setTime(endOfIdleHour.getTime() + SECONDS_IN_HOUR * MILLISECONDS_IN_SECOND);
-
-  // получаем дату конца того часа, при котором мы начали замерять активность
-  endOfIdleHour.setMinutes(0, 0, 0);
-
-  return endOfIdleHour;
-}
-
 function calculateIdleSeconds(lastActiveAt) {
-  let idleMilliseconds = today() - lastActiveAt;
-
-  // приложение было закрытым более одного часа
-  if (lastActiveAt.getHours() !== today().getHours()) {
-    idleMilliseconds = getEndOfIdleHour(lastActiveAt) - lastActiveAt
-  }
-
-  return idleMilliseconds / MILLISECONDS_IN_SECOND;
+  return lastActiveAt.getHours() === today().getHours()
+    ? toSeconds(today() - lastActiveAt)
+    : toSeconds(endOfHour(lastActiveAt) - lastActiveAt)
 }
 
 export function saveState() {

@@ -8,7 +8,7 @@ import {
   scrollToCurrentHour,
   stopTimelineItemTimer
 } from "@/timeline-items";
-import { startTimer, stopTimer } from "@/time";
+import { startCurrentDateTimer, stopCurrentDateTimer } from "@/time";
 
 // хук onMounted(() => {}) позволяет выполнить код после того, как vue-компонент будет полностью готов, и все его элементы будут отрендерены в DOM-дереве, выполняется только один раз
 
@@ -25,11 +25,11 @@ stopTimelineItemTimer();
 
 onActivated(() => {
   scrollToCurrentHour();
-  startTimer()
+  startCurrentDateTimer()
 });
 
 // при переходе на другую страницу останавливаем индикатор
-onDeactivated(stopTimer)
+onDeactivated(stopCurrentDateTimer)
 </script>
 
 <template>
