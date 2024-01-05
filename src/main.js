@@ -1,20 +1,12 @@
 import '@/assets/main.css'
-import { loadState, saveState } from '@/storage'
-import { activeTimelineItem } from '@/timeline-items'
-import { startTimelineItemTimer } from '@/timeline-item-timer'
+import { syncState } from '@/storage'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-// загружаем начальное состояние приложения
-loadState()
-
-if (activeTimelineItem.value) {
-  // запускаем глобальный таймер
-  startTimelineItemTimer(activeTimelineItem.value)
-}
+syncState()
 
 document.addEventListener('visibilitychange', () => {
-  document.visibilityState === 'visible' ? loadState() : saveState()
+  syncState(document.visibilityState === 'visible')
 })
 
 createApp(App).mount('#app')
