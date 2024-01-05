@@ -15,21 +15,26 @@ function filterTimelineItemsByActivity(timelineItems, { id }) {
   return timelineItems.filter(({ activityId }) => activityId === id)
 }
 
-function syncIdleSeconds(timelineItems, lastActiveAt) {
-  // модифицируем массив timelineItems
-  const activeTimelineItem = timelineItems.find(({ isActive }) => isActive)
-
-  if (activeTimelineItem) {
-      activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt)
-  }
-
-  return timelineItems
+function syncIdleSeconds(lastActiveAt) {
+  updateTimelineItem(activeTimelineItem.value, {
+    activitySeconds: activeTimelineItem.value.activitySeconds + calculateIdleSeconds(lastActiveAt)
+  })
 }
 
 function calculateIdleSeconds(lastActiveAt) {
-return lastActiveAt.getHours() === today().getHours()
-  ? toSeconds(today() - lastActiveAt)
-  : toSeconds(endOfHour(lastActiveAt) - lastActiveAt)
+  return lastActiveAt.getHours() === today().getHours()
+    ? toSeconds(today() - lastActiveAt)
+    : toSeconds(endOfHour(lastActiveAt) - lastActiveAt)
+}
+
+// сбрасывает секунды, но сохраняет активности
+function resetTimelineItems() {
+  timelineItems.value.forEach((timelineItem) =>
+    updateTimelineItem(timelineItem, {
+      activitySeconds: 0,
+      isActive: false
+    })
+  )
 }
 
 export const timelineItems = ref([])
@@ -48,9 +53,9 @@ export function initializeTimelineItems(state) {
 
   if (activeTimelineItem.value && isToday(lastActiveAt)) {
     // если приложение открыто в текущий день
-    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt)
+    syncIdleSeconds(lastActiveAt)
   } else if (state.timelineItems && !isToday(lastActiveAt)) {
-    timelineItems.value = resetTimelineItems(state.timelineItems)
+    resetTimelineItems()
   }
 }
 
