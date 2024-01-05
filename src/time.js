@@ -3,7 +3,6 @@ import {
   HUNDRED_PERCENT,
   SECONDS_IN_DAY,
   MILLISECONDS_IN_SECOND,
-  SECONDS_IN_MINUTE
 } from '@/constants'
 
 // дата, соответствующая прошедшей полночи
@@ -23,7 +22,7 @@ export function startTimer() {
   now.value = today()
 
   timer = setInterval(() => {
-    now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND)
+    now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND)
 }
 
@@ -35,7 +34,7 @@ export function today() {
     const today = new Date()
 
     // временно, для тестирования
-    today.setHours(0, 0)
+    // today.setHours(0, 0)
 
     return today
   }
