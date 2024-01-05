@@ -1,17 +1,9 @@
 import { MILLISECONDS_IN_SECOND } from '@/constants'
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { activeTimelineItem, updateTimelineItem } from '@/timeline-items'
-import { now } from '@/time'
 
 // глобальный таймер
 const timelineItemTimer = ref(false)
-
-// отслеживаем когда поменяется час, если был активен какой-либо секундомер, его нужно остановить автоматически
-watchEffect(() => {
-  if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
-    stopTimelineItemTimer()
-  }
-})
 
 // запуск глобального таймера timelineItemTimer
 export function startTimelineItemTimer(timelineItem) {

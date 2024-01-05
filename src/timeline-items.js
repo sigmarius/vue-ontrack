@@ -1,6 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants'
-import { today, isToday, endOfHour, toSeconds } from '@/time'
+import { now, today, isToday, endOfHour, toSeconds } from '@/time'
+import { stopTimelineItemTimer } from '@/timeline-item-timer'
 
 function generateTimelineItems() {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
@@ -36,6 +37,17 @@ function resetTimelineItems() {
     })
   )
 }
+
+watch(now, (after, before) => {
+  if (activeTimelineItem.value && activeTimelineItem.value.hour !== after.getHours()) {
+    // отслеживаем когда поменяется час, если был активен какой-либо секундомер, его нужно остановить автоматически
+    stopTimelineItemTimer()
+  }
+
+  if (before.getHours() !== after.getHours() && after.getHours() === MIDNIGHT_HOUR) {
+    resetTimelineItems() // начался новый день
+  }
+})
 
 export const timelineItems = ref([])
 
