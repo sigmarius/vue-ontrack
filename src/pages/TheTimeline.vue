@@ -6,7 +6,6 @@ import {
   timelineItems,
   timelineItemRefs,
   scrollToCurrentHour,
-  stopTimelineItemTimer
 } from "@/timeline-items";
 import { startCurrentDateTimer, stopCurrentDateTimer } from "@/time";
 
@@ -19,9 +18,6 @@ import { startCurrentDateTimer, stopCurrentDateTimer } from "@/time";
 // onActivated(() => {
 //   scrollToCurrentHour(false);
 // });
-
-// останавливаем глобальный секундомер в самый первый раз при создании приложения
-stopTimelineItemTimer();
 
 onActivated(() => {
   scrollToCurrentHour();
