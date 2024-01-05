@@ -1,8 +1,8 @@
 <script setup>
-import { formatSeconds } from "@/functions";
-import { isActivityValid } from "@/validators";
-import { useProgress } from "@/composables/progress"
-import { HUNDRED_PERCENT } from "@/constants"
+import { formatSeconds } from '@/functions'
+import { isActivityValid } from '@/validators'
+import { useProgress } from '@/composables/progress'
+import { HUNDRED_PERCENT } from '@/constants'
 
 const props = defineProps({
   activity: {
@@ -10,9 +10,9 @@ const props = defineProps({
     required: true,
     validator: isActivityValid
   }
-});
+})
 
-const { percentage, trackedActivitySeconds, colorClass} = useProgress(props.activity);
+const { percentage, trackedActivitySeconds, colorClass } = useProgress(props.activity)
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const { percentage, trackedActivitySeconds, colorClass} = useProgress(props.acti
       <div
         :class="['transition-all', colorClass]"
         :style="{ width: `${Math.min(percentage, HUNDRED_PERCENT)}%` }"
-        ></div>
+      ></div>
     </div>
 
     <div class="flex justify-between font-mono text-sm">

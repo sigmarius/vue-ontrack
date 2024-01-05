@@ -1,17 +1,13 @@
 <script setup>
-import { computed } from "vue";
+import { computed } from 'vue'
 
-import BaseButton from "@/components/BaseButton.vue";
-import BaseIcon from "./BaseIcon.vue";
-import {
-  validateSelectOptions,
-  isUndefinedOrNull,
-  isSelectValueValid,
-} from "@/validators";
+import BaseButton from '@/components/BaseButton.vue'
+import BaseIcon from './BaseIcon.vue'
+import { validateSelectOptions, isUndefinedOrNull, isSelectValueValid } from '@/validators'
 
-import { BUTTON_TYPE_NEUTRAL } from "@/constants";
-import { ICON_XMARK } from "@/icons";
-import { normalizeSelectValue } from "@/functions";
+import { BUTTON_TYPE_NEUTRAL } from '@/constants'
+import { ICON_XMARK } from '@/icons'
+import { normalizeSelectValue } from '@/functions'
 
 // defineProps(["options", "placeholder", "selected"]);
 
@@ -19,25 +15,25 @@ const props = defineProps({
   selected: [String, Number],
   placeholder: {
     type: String,
-    default: "Rest",
+    default: 'Rest'
   },
   options: {
     required: true,
     type: Array,
-    validator: validateSelectOptions,
-  },
-});
+    validator: validateSelectOptions
+  }
+})
 
 const emit = defineEmits({
-  select: isSelectValueValid,
-});
+  select: isSelectValueValid
+})
 
 // computed свойства определяются на основе значений других свойств
 // являются реактивными, и запускаются при изменении реактивных свойств
-const isNotSelected = computed(() => isUndefinedOrNull(props.selected));
+const isNotSelected = computed(() => isUndefinedOrNull(props.selected))
 
 function select(value) {
-  emit("select", normalizeSelectValue(value));
+  emit('select', normalizeSelectValue(value))
 }
 </script>
 

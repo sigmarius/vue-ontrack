@@ -1,7 +1,7 @@
 import { MILLISECONDS_IN_SECOND } from '@/constants'
 import { ref, watchEffect } from 'vue'
 import { activeTimelineItem, updateTimelineItem } from '@/timeline-items'
-import { now } from "@/time"
+import { now } from '@/time'
 
 // глобальный таймер
 const timelineItemTimer = ref(false)

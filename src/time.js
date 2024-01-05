@@ -22,9 +22,7 @@ export const secondsSinceMidnightInPercentage = computed(
 export function startCurrentDateTimer() {
   now.value = today()
 
-  currentDateTimer = setInterval(() => {
-    now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECOND)
-  }, MILLISECONDS_IN_SECOND)
+  currentDateTimer = setInterval(() => (now.value = today()), MILLISECONDS_IN_SECOND)
 }
 
 export function stopCurrentDateTimer() {
@@ -32,36 +30,31 @@ export function stopCurrentDateTimer() {
 }
 
 export function today() {
-    const today = new Date()
+  return new Date()
+}
 
-    // временно, для тестирования
-    // today.setHours(0, 0)
+export function tomorrow() {
+  const tomorrow = today()
+  tomorrow.setHours(tomorrow.getDate() + 1)
 
-    return today
-  }
-
-  export function tomorrow() {
-    const tomorrow = today()
-    tomorrow.setHours(tomorrow.getDate() + 1)
-
-    return tomorrow
-  }
+  return tomorrow
+}
 
 export function isToday(date) {
-    return date.toDateString() === today().toDateString()
+  return date.toDateString() === today().toDateString()
 }
 
 // вычисляет окончание часа, при котором мы начали замерять время для активности
 export function endOfHour(date) {
-  const endOfHour = new Date(date);
+  const endOfHour = new Date(date)
 
   // добавляем 1 час к дате последнего закрытия приложения
-  endOfHour.setTime(endOfHour.getTime() + SECONDS_IN_HOUR * MILLISECONDS_IN_SECOND);
+  endOfHour.setTime(endOfHour.getTime() + SECONDS_IN_HOUR * MILLISECONDS_IN_SECOND)
 
   // получаем дату конца того часа, при котором мы начали замерять активность
-  endOfHour.setMinutes(0, 0, 0);
+  endOfHour.setMinutes(0, 0, 0)
 
-  return endOfHour;
+  return endOfHour
 }
 
 export function toSeconds(milliseconds) {

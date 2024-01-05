@@ -1,5 +1,5 @@
-import { generatePeriodSelectOptions } from "@/functions";
-import { ICON_CLOCK, ICON_LIST_BULLET, ICON_CHART_BAR} from "@/icons"
+import { generatePeriodSelectOptions } from '@/functions'
+import { ICON_CLOCK, ICON_LIST_BULLET, ICON_CHART_BAR } from '@/icons'
 
 export const APP_NAME = 'ontrack'
 
@@ -47,8 +47,8 @@ export const MINUTES_IN_HOUR = 60
 export const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * MINUTES_IN_HOUR
 export const SECONDS_IN_DAY = SECONDS_IN_HOUR * HOURS_IN_DAY
 
-export const LOW_PERCENT = 33;
-export const MEDIUM_PERCENT = 66;
-export const HUNDRED_PERCENT = 100;
+export const LOW_PERCENT = 33
+export const MEDIUM_PERCENT = 66
+export const HUNDRED_PERCENT = 100
 
-export const PERIOD_SELECT_OPTIONS = generatePeriodSelectOptions();
+export const PERIOD_SELECT_OPTIONS = generatePeriodSelectOptions()

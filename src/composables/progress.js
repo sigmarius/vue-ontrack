@@ -12,8 +12,8 @@ export function useProgress(activity) {
     calculateTrackedActivitySeconds(timelineItems.value, activity)
   )
 
-    // обращаемся к computed свойству через value
-    const colorClass = computed(() => getProgressColorClass(percentage.value))
+  // обращаемся к computed свойству через value
+  const colorClass = computed(() => getProgressColorClass(percentage.value))
 
   return {
     percentage,

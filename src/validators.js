@@ -1,5 +1,5 @@
 import { NAV_ITEMS, HOURS_IN_DAY, MIDNIGHT_HOUR, BUTTON_TYPES } from '@/constants'
-import { ICONS } from "@/icons"
+import { ICONS } from '@/icons'
 
 function isString(value) {
   return typeof value === 'string'
@@ -17,16 +17,20 @@ function isNotEmptyString(value) {
   return isString(value) && value.length > 0
 }
 
-export function isNumber(value) {
+function isNumber(value) {
   return typeof value === 'number'
+}
+
+function isNumberOrNull(property) {
+  return isNumber(property) || isNull(property)
+}
+
+function isUndefined(value) {
+  return value === undefined
 }
 
 export function isNull(value) {
   return value === null
-}
-
-export function isUndefined(value) {
-  return value === undefined
 }
 
 export function isHourValid(hour) {
@@ -47,16 +51,8 @@ export function validateSelectOptions(options) {
   return options.every(isSelectOptionValid)
 }
 
-export function validateTimelineItems(timelineItems) {
-  return timelineItems.every(isTimelineItemValid)
-}
-
 export function isUndefinedOrNull(property) {
   return isUndefined(property) || isNull(property)
-}
-
-export function isNumberOrNull(property) {
-  return isNumber(property) || isNull(property)
 }
 
 export function isActivityValid({ id, name, secondsToComplete }) {
@@ -65,10 +61,6 @@ export function isActivityValid({ id, name, secondsToComplete }) {
   }
 
   return [isNotEmptyString(id), isNotEmptyString(name), isNumber(secondsToComplete)].every(Boolean)
-}
-
-export function validateActivities(activities) {
-  return activities.every(isActivityValid)
 }
 
 export function isButtonTypeValid(type) {

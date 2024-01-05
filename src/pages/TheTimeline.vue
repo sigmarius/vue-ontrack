@@ -1,13 +1,9 @@
 <script setup>
-import { onActivated, onDeactivated } from "vue";
-import TimelineItem from "@/components/TimelineItem.vue";
-import TheTimelineIndicator from "@/components/TheTimelineIndicator.vue";
-import {
-  timelineItems,
-  timelineItemRefs,
-  scrollToCurrentHour,
-} from "@/timeline-items";
-import { startCurrentDateTimer, stopCurrentDateTimer } from "@/time";
+import { onActivated, onDeactivated } from 'vue'
+import TimelineItem from '@/components/TimelineItem.vue'
+import TheTimelineIndicator from '@/components/TheTimelineIndicator.vue'
+import { timelineItems, timelineItemRefs, scrollToCurrentHour } from '@/timeline-items'
+import { startCurrentDateTimer, stopCurrentDateTimer } from '@/time'
 
 // хук onMounted(() => {}) позволяет выполнить код после того, как vue-компонент будет полностью готов, и все его элементы будут отрендерены в DOM-дереве, выполняется только один раз
 
@@ -20,9 +16,9 @@ import { startCurrentDateTimer, stopCurrentDateTimer } from "@/time";
 // });
 
 onActivated(() => {
-  scrollToCurrentHour();
+  scrollToCurrentHour()
   startCurrentDateTimer()
-});
+})
 
 // при переходе на другую страницу останавливаем индикатор
 onDeactivated(stopCurrentDateTimer)

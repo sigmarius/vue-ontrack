@@ -1,21 +1,18 @@
 <script setup>
-import { PAGE_PROGRESS, HUNDRED_PERCENT } from "@/constants";
-import { ICON_CHECK_CIRCLE } from "@/icons";
-import BaseIcon from "@/components/BaseIcon.vue";
-import { useTotalProgress } from "@/composables/total-progress"
-import { navigate } from "@/router";
+import { PAGE_PROGRESS, HUNDRED_PERCENT } from '@/constants'
+import { ICON_CHECK_CIRCLE } from '@/icons'
+import BaseIcon from '@/components/BaseIcon.vue'
+import { useTotalProgress } from '@/composables/total-progress'
+import { navigate } from '@/router'
 
-const { percentage, colorClass} = useTotalProgress();
+const { percentage, colorClass } = useTotalProgress()
 </script>
 
 <template>
-  <a
-    :href="`#${PAGE_PROGRESS}`"
-    class="text-sm"
-    @click="navigate(PAGE_PROGRESS)"
-  >
+  <a :href="`#${PAGE_PROGRESS}`" class="text-sm" @click="navigate(PAGE_PROGRESS)">
     <div v-if="percentage < HUNDRED_PERCENT" class="flex items-center gap-1">
-      <div>Progress:
+      <div>
+        Progress:
         <span class="font-mono">{{ percentage }}%</span>
       </div>
 
